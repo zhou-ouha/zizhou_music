@@ -1,0 +1,355 @@
+<template>
+  <div id="audioBody">
+    <div class="detail">
+      <img :src="imgUrl">
+      <div>
+        {{musicName}}
+      </div>
+    </div>
+    <audio ref="audio"
+            @pause="onPause"
+            @play="onPlay"
+            @timeupdate="onTimeupdate"
+            @loadedmetadata="onLoadedmetadata"
+            :src="musicUrl"></audio>
+    
+    <!-- 音频播放控件 -->
+    <div id="controls">
+      <!-- 播放，上一首，下一首 -->
+      <div class="playControls">
+        <el-button-group>
+          <span class="iconfont forward" @click="forwardMusic">&#xeb06;</span>
+          <span class="iconfont play" @click="startPlayOrPause" v-show="audio.playing == false">&#xe610;</span>
+          <span class="iconfont play" @click="startPlayOrPause" v-show="audio.playing == true">&#xeb18;</span>
+          <span class="iconfont next" @click="nextMusic">&#xeb07;</span>
+        </el-button-group>
+      </div>
+      <!-- 时间进度条 -->
+      <div class="timeProgress">
+        <span class="time">{{ audio.currentTime | formatSecond }}/{{ audio.maxTime | formatSecond }}</span>
+        <el-slider v-model="sliderTime" :format-tooltip="timeTip" @change="changeCurrentTime" class="slider"></el-slider>
+      </div>
+    </div>
+    <!-- 音量 -->
+    <div>
+      <span class="iconfont volIcon">&#xe62d;</span>
+      <div class="vol">
+        <el-slider vertical v-model="sliderVol" :format-tooltip="volTip" @change="changeCurrentVol" class="volSlider" ></el-slider>
+      </div>
+    </div>
+    <!-- 音乐列表 -->
+    <div>
+      <!-- <span class="iconfont" @click="getMenu">&#xe6a7;</span> -->
+      <!-- <el-card class="box-card">
+        <div v-for="o in musicMenuId" :key="o.name" class="text item">
+          {{ o }}
+        </div>
+      </el-card> -->
+    </div>
+  </div>
+</template>
+
+<script>
+import http from '@/network/http'
+// 将整数转换成 时：分：秒的格式
+function realFormatSecond(second) {
+  var secondType = typeof second
+
+  if (secondType === 'number' || secondType === 'string') {
+    second = parseInt(second)
+
+    var hours = Math.floor(second / 3600)
+    second = second - hours * 3600
+    var mimute = Math.floor(second / 60)
+    second = second - mimute * 60
+
+    return ('0' + mimute).slice(-2) + ':' + ('0' + second).slice(-2)
+  } else {
+    return '00:00'
+  }
+}
+export default {
+  data () {
+    return {
+      detail:'',
+      // trackIds
+      musicMenuIds:[],
+      musicMenu:[],
+      // music urls in the menu
+      musicUrls:[],
+      // current music index
+      musicIndex:0,
+      // current music index
+      musicUrl:'',
+      // img urls
+      imgUrls:[],
+      // current img url
+      imgUrl:'',
+      // music names
+      names:[],
+      // current music name
+      musicName:'',
+      sliderTime:0,
+      sliderVol:50,
+      audio: {
+          // 该字段是音频是否处于播放状态的属性
+          playing: false,
+          // 音频当前播放时长
+          currentTime: 0,
+          // 音频最大播放时长
+          maxTime: 0
+      }
+    }
+  },
+  mounted(){
+    http.getMusicMenu().then(res=>{
+      // console.log(res)
+      this.musicMenu = res.data.playlists
+      // get musicMenu detail
+      http.getMusicMenuDetail({id:this.musicMenu[1].id}).then(res=>{
+        this.musicMenuIds = res.data.playlist.trackIds
+        // console.log(this.musicMenuIds)
+        // get music detail
+        http.getMusicDetail({ids:this.musicMenuIds}).then(res=>{
+          res.data.songs.pop()
+          this.names = res.data.songs.map(item=> item.name)
+          console.log(this.names)
+          this.imgUrls = res.data.songs.map(item => item.al.picUrl)
+          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
+          this.imgUrl = this.imgUrls[this.musicIndex]
+          // console.log("imgurl:",this.imgUrl)
+        })
+        // get music url
+        http.getMusicUrl({ids:this.musicMenuIds}).then(res=>{
+          res.data.data.pop()
+          
+          this.musicUrls = res.data.data.map((item)=> item.url)
+          console.log(this.musicUrls)
+          this.musicUrl = this.musicUrls[this.musicIndex]
+        })
+      },err=>{
+
+      })
+    },err=>{
+
+    })
+    
+  },
+  methods: {
+      forwardMusic(){
+        this.audio.playing = false
+        if(this.musicIndex > 0){
+          this.musicIndex --
+        }else{
+          console.log("我是0号位置")
+          this.musicIndex = this.musicUrls.length - 1
+          console.log(this.musicUrls.length,this.musicIndex)
+        }
+        this.imgUrl = this.imgUrls[this.musicIndex]
+        if(this.names[this.musicIndex].indexOf("(") > 0){
+          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
+        }else if(this.names[this.musicIndex].indexOf("（") > 0){
+          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
+        }
+        this.$refs.audio.src =  this.musicUrls[this.musicIndex];
+        this.$refs.audio.autoplay = true
+      },
+      nextMusic(){
+        this.audio.playing = false
+        this.musicIndex ++
+        this.imgUrl = this.imgUrls[this.musicIndex]
+        if(this.names[this.musicIndex].indexOf("(") > 0){
+          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
+        }else if(this.names[this.musicIndex].indexOf("（") > 0){
+          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
+        }
+        this.$refs.audio.src =  this.musicUrls[this.musicIndex]
+        this.$refs.audio.autoplay = true
+      },
+      // 拖动进度条，改变当前时间，index是进度条改变时的回调函数的参数0-100之间，需要换算成实际时间
+      changeCurrentTime(index) {
+          this.$refs.audio.currentTime = parseInt(index / 100 * this.audio.maxTime)
+      },
+      // 音量进度条参数必须是0到1之间的数值
+      changeCurrentVol(index) {
+          this.$refs.audio.volume = this.sliderVol / 100
+      },
+      // 控制音频的播放与暂停
+      startPlayOrPause () {
+          return this.audio.playing ? this.pause() : this.play()
+      },
+      // 播放音频
+      play () {
+          this.$refs.audio.play()
+      },
+      // 暂停音频
+      pause () {
+          this.$refs.audio.pause()
+      },
+      // 当音频播放
+      onPlay () {
+          this.audio.playing = true
+      },
+      // 当音频暂停
+      onPause () {
+          this.audio.playing = false
+      },
+      // 当timeupdate事件大概每秒一次，用来更新音频流的当前播放时间
+      onTimeupdate(res) {
+          console.log('timeupdate')
+          // console.log(res)
+          this.audio.currentTime = res.target.currentTime
+          this.sliderTime = parseInt(this.audio.currentTime / this.audio.maxTime * 100)
+      },
+      // 当加载语音流元数据完成后，会触发该事件的回调函数
+      // 语音元数据主要是语音的长度之类的数据
+      onLoadedmetadata(res) {
+          console.log('loadedmetadata')
+          console.log(res)
+          this.audio.maxTime = parseInt(res.target.duration)
+      },
+      // 进度条格式化toolTip
+      timeTip(index = 0) {
+          index = parseInt(this.audio.maxTime / 100 * index)
+          return '进度条: ' + realFormatSecond(index)
+      },
+      // 音量进度条格式化toolTip
+      volTip() {
+          return '音量: ' + this.sliderVol
+      },
+  },
+  filters: {
+      // 使用组件过滤器来动态改变按钮的显示
+      transPlayPause(value) {
+          return value ? '暂停' : '播放'
+      },
+      // 将整数转化成时分秒
+      formatSecond(second = 0) {
+          return realFormatSecond(second)
+      }
+  }
+}
+</script>
+    
+<style scoped>
+>>>.el-slider__button {
+  width: 6px;
+  height: 6px;
+  border: 2px solid #ffffff;
+}
+>>>.el-slider__button:hover {
+  cursor: default;
+}
+>>>.el-slider__button-wrapper.hover, .el-slider__button-wrapper:hover {
+    cursor: default;
+}
+>>>.el-slider__bar {
+  background-color: #EC4141;
+}
+>>>.el-slider__bar:hover {
+  cursor: default;
+}
+>>>.el-slider__runway{
+  cursor: default;
+}
+#audioBody{
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+#controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.box-card {
+    width: 480px;
+}
+.detail{
+  /* width: 10px;
+  height: 10px; */
+  position: relative;
+  top: 2px;
+  left: -12%;
+}
+.detail img{
+  width: 60px;
+  height: auto;
+}
+.detail div{
+  width: 10vw;
+  position: absolute;
+  top: 0;
+  left: 66px;
+  font-size: 12px;
+  color: #333;
+}
+.text {
+  font-size: 14px;
+}
+
+.item {
+  padding: 18px 0;
+}
+.playControls{
+  margin-top: 1vh;
+}
+.timeProgress{
+  position: relative;
+  margin-top: -1vh;
+}
+.forward,.next{
+  font-size: 30px;
+  cursor: pointer;
+  /* color: #fff; */
+}
+.play{
+  font-size: 32px;
+  margin: 2vw;
+  cursor: pointer;
+  /* color: #fff; */
+}
+.time{
+  font-size: 12px;
+  color: aliceblue;
+  position: absolute;
+  top: 10px;
+  left: -60px;
+}
+.slider{
+  width: 25vw;
+  display: inline-block;
+  margin-left: 2vw;
+}
+.vol{
+  position: absolute!important;
+  top: -90%;
+  left: 100%;
+  display: none;
+  border: 1px solid #333;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 1vh 0;
+}
+.volIcon{
+  position: absolute!important;
+  top: 45%;
+  left: 101%;
+  font-size: 18px;
+  cursor: pointer;
+}
+.volIcon:hover+.vol{
+  display: block;
+}
+.vol:hover{
+  display: block;
+}
+.volSlider{
+  height: 10vh;
+}
+</style>
