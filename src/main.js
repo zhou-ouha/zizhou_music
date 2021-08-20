@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/icon/iconfont.css'
 import VueParticles from 'vue-particles'
 import less from 'less'
+import './util/css/global.css'
 
 
 Vue.config.productionTip = false

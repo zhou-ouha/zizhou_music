@@ -108,23 +108,18 @@ export default {
       // get musicMenu detail
       http.getMusicMenuDetail({id:this.musicMenu[1].id}).then(res=>{
         this.musicMenuIds = res.data.playlist.trackIds
-        // console.log(this.musicMenuIds)
         // get music detail
         http.getMusicDetail({ids:this.musicMenuIds}).then(res=>{
           res.data.songs.pop()
           this.names = res.data.songs.map(item=> item.name)
-          console.log(this.names)
           this.imgUrls = res.data.songs.map(item => item.al.picUrl)
           this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
           this.imgUrl = this.imgUrls[this.musicIndex]
-          // console.log("imgurl:",this.imgUrl)
         })
         // get music url
         http.getMusicUrl({ids:this.musicMenuIds}).then(res=>{
           res.data.data.pop()
-          
           this.musicUrls = res.data.data.map((item)=> item.url)
-          console.log(this.musicUrls)
           this.musicUrl = this.musicUrls[this.musicIndex]
         })
       },err=>{
@@ -141,9 +136,9 @@ export default {
         if(this.musicIndex > 0){
           this.musicIndex --
         }else{
-          console.log("我是0号位置")
+          // console.log("我是0号位置")
           this.musicIndex = this.musicUrls.length - 1
-          console.log(this.musicUrls.length,this.musicIndex)
+          // console.log(this.musicUrls.length,this.musicIndex)
         }
         this.imgUrl = this.imgUrls[this.musicIndex]
         if(this.names[this.musicIndex].indexOf("(") > 0){
@@ -232,26 +227,6 @@ export default {
 </script>
     
 <style scoped>
->>>.el-slider__button {
-  width: 6px;
-  height: 6px;
-  border: 2px solid #ffffff;
-}
->>>.el-slider__button:hover {
-  cursor: default;
-}
->>>.el-slider__button-wrapper.hover, .el-slider__button-wrapper:hover {
-    cursor: default;
-}
->>>.el-slider__bar {
-  background-color: #EC4141;
-}
->>>.el-slider__bar:hover {
-  cursor: default;
-}
->>>.el-slider__runway{
-  cursor: default;
-}
 #audioBody{
   width: 80%;
   margin: 0 auto;

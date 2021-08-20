@@ -32,9 +32,11 @@ export default {
 #footer{
     width: 100%;
     height: 9vh;
-    background-color: rgba(0, 0, 0, 0.486);
+    background-color: rgba(0, 0, 0, 0.308);
     margin: 0 auto;
     display: flex;
     flex-direction: row;
+    position: relative;
+    z-index: 99999;
 }
 </style>
