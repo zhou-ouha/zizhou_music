@@ -14,6 +14,7 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 8月20日
+    - 大致完成左侧部分菜单布局
+- 8月21日
+    - 大致完成右侧部分布局思路
