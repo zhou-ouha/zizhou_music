@@ -64,11 +64,7 @@
       <div id="right">
         <el-scrollbar style="height:100%">
           <div class="homeTab">
-            <div class="tabBar" ref="tabBar">
-              <div v-for="(name,index) in tabName" :class="{bigSize:index === currentTabIndex}" @click="toggleTab(name,index)">
-                {{name}}<span :class="{tabLine:index === currentTabIndex}"></span>
-              </div>
-            </div>
+            <menu-tab :tabName="tabName"></menu-tab>
           </div>
           <div>
             <router-view></router-view>
@@ -84,11 +80,13 @@
 // @ is an alias to /src
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import MenuTab from '@/components/MenuTab'
 export default {
   name: 'Home',
   components:{
     Header,
-    Footer
+    Footer,
+    MenuTab
   },
   data() {
       return {
@@ -110,18 +108,13 @@ export default {
     },
     handleClick(tab,event){
       console.log(tab.index,event)
-    },
-    toggleTab(name,index){
-      this.currentTabIndex = index
-      this.$router.push(this.$router.options.routes[0].children[index].path)
-      
     }
   }
 }
 </script>
 <style scoped>
 .home{
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   margin-top: 50px;
 }
@@ -132,13 +125,13 @@ export default {
   flex-direction: row;
 }
 #left{
-  width: 15%;
+  width: 12%;
   height: 70vh;
   background-color: rgba(5, 5, 5, 0.308);
   overflow: hidden;
 }
 #right{
-  width: 85%;
+  width: 88%;
   height: 70vh;
   background-color: rgba(4, 4, 4, 0.726);
   overflow: hidden;
