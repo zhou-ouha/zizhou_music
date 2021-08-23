@@ -10,13 +10,50 @@
         </div>
         <!-- 推荐歌单 -->
         <div>
-            <div class="">推荐歌单<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
-            <div class="imgCard">
+            <div class="more">推荐歌单<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
+            <div class="imgCard commandBox">
                 <div v-for="i in 10">
                     <img :src="url" alt="">
                     <span>{{"图片" + i}}</span>
                 </div>
 
+            </div>
+        </div>
+        <!-- 独家放送 -->
+        <div>
+            <div class="more">独家放送<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
+            <div class="onlyImg commandBox">
+                <div v-for="i in 3">
+                    <img :src="url" alt="">
+                    <span>{{"独家" + i}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- 最新音乐 -->
+        <div>
+            <div class="more">最新音乐<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
+            <div class="latestMusic commandBox">
+                <div v-for="i in 12">
+                    <div>
+                        <div class="left">
+                            <img :src="url" alt=""><div class="playIcon"></div>
+                        </div>
+                        <div class="right">
+                            <div class="musicName">{{"音乐" + i}}</div>
+                            <div class="author">{{"作者" + i}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 推荐MV -->
+        <div>
+            <div class="more">推荐MV<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
+            <div class="MV commandBox">
+                <div v-for="i in 4">
+                    <img :src="url" alt="">
+                    <span>{{"推荐MV" + i}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -49,11 +86,15 @@ export default {
 .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
 }
-.imgCard{
+.more{
+    color: #fff;
+}
+.commandBox{
     padding: 2vh 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    color: #fff;
 }
 .imgCard div{
     width: calc(100% / 5 - 1vw);
@@ -62,6 +103,49 @@ export default {
     text-align: center;
 }
 .imgCard img{
+    width: 100%;
+    height: auto;
+}
+.onlyImg div{
+    width: calc(100% / 3 - 2vw);
+    height: auto;
+    margin: 0 1vw;
+    text-align: center;
+}
+.onlyImg img{
+    width: 100%;
+    height: auto;
+}
+.latestMusic{
+    width: 100%;
+}
+.latestMusic > div{
+    width: calc(100% / 3);
+    height: calc(100% / 4 - 2vw);
+}
+.latestMusic > div:hover{
+    background-color: #99a9bf;
+}
+.latestMusic .left{
+    float: left;
+    width: calc(100% / 2 - 2vw);
+    height: calc(100% / 4);
+}
+.latestMusic .right{
+    float: left;
+    width: calc(100% / 2 - 2vw);
+    height: calc(100% / 4);
+}
+.latestMusic img{
+    width: 5vw;
+}
+.MV div{
+    width: calc(100% / 4 - 2vw);
+    height: auto;
+    margin: 0 1vw;
+    text-align: center;
+}
+.MV img{
     width: 100%;
     height: auto;
 }

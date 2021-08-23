@@ -114,7 +114,7 @@ export default {
 </script>
 <style scoped>
 .home{
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
   margin-top: 50px;
 }
