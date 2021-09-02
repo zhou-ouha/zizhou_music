@@ -66,12 +66,27 @@
           <div class="homeTab">
             <menu-tab :tabName="tabName"></menu-tab>
           </div>
+          
           <div>
             <router-view></router-view>
           </div>
+          
         </el-scrollbar>
       </div>
     </div>
+    <div class="menuList" v-show="this.$store.state.toggle">
+      <!-- <div>
+        歌曲名称
+      </div> -->
+      <el-scrollbar style="height:100%">
+        <el-card class="box-card" style="height:100%">
+          <div v-for="(name,index) in this.$store.state.details" :key="name" class="text item">
+            <div @dblclick="getUrl(index)" class="name">{{ name }}</div>
+            <hr>
+          </div>
+        </el-card> 
+      </el-scrollbar> 
+    </div>     
     <Footer></Footer>
   </div>
 </template>
@@ -88,10 +103,19 @@ export default {
     Footer,
     MenuTab
   },
+  mounted(){
+    // this.toggle = this.$store.state.toggle
+    // console.log(this.toggle)
+  },
+  updated(){
+    // console.log(this.toggle)
+  },
   data() {
       return {
         myMenu:false,
         getMenu:false,
+        currentMusicUrl:'',
+        // toggle:this.$store.state.toggle,
         //tab栏名称
         tabName:["个性音乐","专属定制","歌单","排行榜","歌手","最新音乐"],
         //当前选中的tab
@@ -108,6 +132,13 @@ export default {
     },
     handleClick(tab,event){
       console.log(tab.index,event)
+    },
+    async getUrl(index){
+      console.log("我被双击了",this.$store.state.ids[index].id)
+      const {data:res} = await this.$http.getMusicUrl({ids:this.$store.state.ids})
+      console.log(res.data[0])
+      this.currentMusicUrl = res.data[index].url
+      this.$store.commit('playCurrentMusic',this.currentMusicUrl);
     }
   }
 }
@@ -192,5 +223,27 @@ export default {
 }
 .myMenu, .getMenu:hover{
   cursor: pointer;
+}
+.menuList{
+  width:20vw;
+  height:70vh;
+  position:absolute;
+  bottom: 15vh;
+  right: 10.4%;
+  /* border: 1px solid #333; */
+  background-color: rgba(126, 126, 126, 0.205);
+  z-index: 999;
+}
+.el-card{
+  background-color: rgb(3,3,3,0.76);
+  box-shadow: none !important;
+  color: #fff;
+  font-size: 12px;
+}
+.el-card__header{
+  position: sticky;
+}
+.box-card .name{
+  cursor:default;
 }
 </style>

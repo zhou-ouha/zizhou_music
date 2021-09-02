@@ -3,8 +3,8 @@
         <!-- 轮播图 -->
         <div>
             <el-carousel :interval="4000" type="card" height="24vh" arrow="never">
-                <el-carousel-item v-for="item in 6" :key="item">
-                <h3 class="medium">{{ item }}</h3>
+                <el-carousel-item v-for="(item,index) in bannerUrl" :key="index">
+                <img :src="item.imageUrl" alt="" height="100%" width="auto">
                 </el-carousel-item>
             </el-carousel>
         </div>
@@ -12,9 +12,9 @@
         <div>
             <div class="more">推荐歌单<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
             <div class="imgCard commandBox">
-                <div v-for="i in 10">
-                    <img :src="url" alt="">
-                    <span>{{"图片" + i}}</span>
+                <div v-for="(item,index) in recommandUrl" :key="index">
+                    <img :src="item.picUrl" alt="">
+                    <span style="font-size:.5em">{{item.name}}</span>
                 </div>
 
             </div>
@@ -23,9 +23,9 @@
         <div>
             <div class="more">独家放送<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
             <div class="onlyImg commandBox">
-                <div v-for="i in 3">
-                    <img :src="url" alt="">
-                    <span>{{"独家" + i}}</span>
+                <div v-for="(item,index) in onlyUrl" :key="index">
+                    <img :src="item.picUrl" alt="">
+                    <span>{{item.name}}</span>
                 </div>
             </div>
         </div>
@@ -33,14 +33,14 @@
         <div>
             <div class="more">最新音乐<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
             <div class="latestMusic commandBox">
-                <div v-for="i in 12">
+                <div v-for="(item,index) in newSong" :key="index">
                     <div>
                         <div class="left">
-                            <img :src="url" alt=""><div class="playIcon"></div>
+                            <img :src="item.picUrl" alt=""><div class="playIcon"></div>
                         </div>
                         <div class="right">
-                            <div class="musicName">{{"音乐" + i}}</div>
-                            <div class="author">{{"作者" + i}}</div>
+                            <div class="musicName">{{item.name}}</div>
+                            <!-- <div class="author">{{"作者:" + item.song.artists[0].name}}</div> -->
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,9 @@
         <div>
             <div class="more">推荐MV<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
             <div class="MV commandBox">
-                <div v-for="i in 4">
+                <div v-for="(item,index) in 4">
                     <img :src="url" alt="">
-                    <span>{{"推荐MV" + i}}</span>
+                    <span>{{"推荐MV" + index}}</span>
                 </div>
             </div>
         </div>
@@ -62,8 +62,40 @@
 export default {
     data(){
         return {
-            url:'https://img0.baidu.com/it/u=103721101,4076571305&fm=26&fmt=auto&gp=0.jpg'
+            url:'https://img0.baidu.com/it/u=103721101,4076571305&fm=26&fmt=auto&gp=0.jpg',
+            recommandUrl:[],
+            bannerUrl:[],
+            onlyUrl:[],
+            newSong:[]
         }
+    },
+    mounted(){
+        this.$http.getBanner().then(res=>{
+            this.bannerUrl = res.data.banners
+            console.log(this.bannerUrl)
+        },err=>{
+
+        })
+        this.$http.getRecommandMenu().then(res=>{
+            this.recommandUrl = res.data.result
+            console.log(this.recommandUrl)
+        },err=>{
+
+        })
+
+        this.$http.getOnly().then(res=>{
+            this.onlyUrl = res.data.result
+            console.log(this.onlyUrl)
+        },err=>{
+
+        })
+
+        this.$http.getNewSong().then(res=>{
+            this.newSong = res.data.result
+            console.log(this.newSong)
+        },err=>{
+
+        })
     }
 }
 </script>
@@ -110,7 +142,8 @@ export default {
     width: calc(100% / 3 - 2vw);
     height: auto;
     margin: 0 1vw;
-    text-align: center;
+    font-size: .5em;
+    /* text-align: center; */
 }
 .onlyImg img{
     width: 100%;

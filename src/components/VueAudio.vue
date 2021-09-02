@@ -1,7 +1,8 @@
 <template>
   <div id="audioBody">
     <div class="detail">
-      <img :src="imgUrl">
+      <img src="../static/imgs/empty.webp" alt="" v-if="!imgUrl">
+      <img :src="imgUrl" v-else>
       <div>
         {{musicName}}
       </div>
@@ -11,7 +12,7 @@
             @play="onPlay"
             @timeupdate="onTimeupdate"
             @loadedmetadata="onLoadedmetadata"
-            :src="musicUrl"></audio>
+            :src="this.$store.state.currentMusicUrl"></audio>
     
     <!-- 音频播放控件 -->
     <div id="controls">
@@ -27,30 +28,27 @@
       <!-- 时间进度条 -->
       <div class="timeProgress">
         <span class="time">{{ audio.currentTime | formatSecond }}/{{ audio.maxTime | formatSecond }}</span>
-        <el-slider v-model="sliderTime" :format-tooltip="timeTip" @change="changeCurrentTime" class="slider"></el-slider>
+        <el-slider v-model="sliderTime" :show-tooltip="false" @change="changeCurrentTime" class="slider"></el-slider>
       </div>
     </div>
+    
     <!-- 音量 -->
     <div>
+      <span class="iconfont menuList" @click="getMenu">&#xe6a7;</span>
       <span class="iconfont volIcon">&#xe62d;</span>
       <div class="vol">
-        <el-slider vertical v-model="sliderVol" :format-tooltip="volTip" @change="changeCurrentVol" class="volSlider" ></el-slider>
+        <el-slider vertical v-model="sliderVol" :show-tooltip="false" @change="changeCurrentVol" class="volSlider" ></el-slider>
       </div>
     </div>
     <!-- 音乐列表 -->
     <div>
-      <!-- <span class="iconfont" @click="getMenu">&#xe6a7;</span> -->
-      <!-- <el-card class="box-card">
-        <div v-for="o in musicMenuId" :key="o.name" class="text item">
-          {{ o }}
-        </div>
-      </el-card> -->
+      
     </div>
   </div>
 </template>
 
 <script>
-import http from '@/network/http'
+// import http from '@/network/http'
 // 将整数转换成 时：分：秒的格式
 function realFormatSecond(second) {
   var secondType = typeof second
@@ -89,6 +87,8 @@ export default {
       names:[],
       // current music name
       musicName:'',
+      // toggle the menuList
+      menuShow:false,
       sliderTime:0,
       sliderVol:50,
       audio: {
@@ -98,39 +98,84 @@ export default {
           currentTime: 0,
           // 音频最大播放时长
           maxTime: 0
-      }
+      },
+      res:''
     }
   },
   mounted(){
-    http.getMusicMenu().then(res=>{
-      // console.log(res)
-      this.musicMenu = res.data.playlists
-      // get musicMenu detail
-      http.getMusicMenuDetail({id:this.musicMenu[1].id}).then(res=>{
-        this.musicMenuIds = res.data.playlist.trackIds
-        // get music detail
-        http.getMusicDetail({ids:this.musicMenuIds}).then(res=>{
-          res.data.songs.pop()
-          this.names = res.data.songs.map(item=> item.name)
-          this.imgUrls = res.data.songs.map(item => item.al.picUrl)
-          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
-          this.imgUrl = this.imgUrls[this.musicIndex]
-        })
-        // get music url
-        http.getMusicUrl({ids:this.musicMenuIds}).then(res=>{
-          res.data.data.pop()
-          this.musicUrls = res.data.data.map((item)=> item.url)
-          this.musicUrl = this.musicUrls[this.musicIndex]
-        })
-      },err=>{
+    this.getTotalMenu();
+    // this.$http.getMusicMenu().then(res=>{//挂载时只需加载得到精品歌单的数据即可，后面三个数据可在用户点击时获取，节省首次请求时间
+    //   console.log(res)
+    //   this.musicMenu = res.data.playlists
+    //   // get musicMenu detail
+    //   this.$http.getMusicMenuDetail({id:this.musicMenu[1].id}).then(res=>{
+    //     this.musicMenuIds = res.data.playlist.trackIds
+    //     // console.log(this.musicMenuIds)
+    //     // get music detail
+    //     // console.log(this.$http.getMusicDetail())
+    //     this.$http.getMusicDetail({ids:this.musicMenuIds}).then(res=>{
+    //       res.data.songs.pop()
+    //       console.log(res)
+    //       this.names = res.data.songs.map(item=> item.name)
+    //       this.imgUrls = res.data.songs.map(item => item.al.picUrl)
+    //       this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
+    //       console.log(this.names)
+    //       this.imgUrl = this.imgUrls[this.musicIndex]
+    //     },err=>{
+    //       console.log(err)
+    //     }).catch(err=>{
+    //       console.log(err)
+    //     })
+    //     // get music url
+    //     this.$http.getMusicUrl({ids:this.musicMenuIds}).then(res=>{
+    //       console.log(res)
+    //       res.data.data.pop()
+    //       this.musicUrls = res.data.data.map((item)=> item.url)
+    //       this.musicUrl = this.musicUrls[this.musicIndex]
+    //     }).catch(err=>{
+    //       console.log(err)
+    //     })
+    //   },err=>{
 
-      })
-    },err=>{
+    //   })
+    // },err=>{
 
-    })
+    // })
     
   },
   methods: {
+      //歌单（网友精选碟）(同时获取歌单详情)
+      async getTotalMenu(){
+        const {data:musicMenu} = await this.$http.getMusicMenu();
+        this.musicMenu = musicMenu.playlists;
+        const {data:res} = await this.$http.getMusicMenuDetail({id:this.musicMenu[1].id});
+        this.musicMenuIds = res.playlist.trackIds;
+        console.log(this.musicMenuIds)
+      },
+      // 获取歌曲详情
+      async getMusicDetail(){
+        const {data:res} = await this.$http.getMusicDetail({ids:this.musicMenuIds});
+        console.log(res)
+        res.songs.pop()
+        this.names = res.songs.map(item=> item.name)
+        this.imgUrls = res.songs.map(item => item.al.picUrl)
+        // 
+        this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
+        console.log(this.musicName)
+        this.imgUrl = this.imgUrls[this.musicIndex]
+      },
+      // 获取音乐url
+      async getMusicUrl(){
+        this.$http.getMusicUrl({ids:this.musicMenuIds}).then(res=>{
+          console.log(res)
+          res.data.data.pop()
+          this.musicUrls = res.data.data.map((item)=> item.url)
+          this.musicUrl = this.musicUrls[this.musicIndex]
+        }).catch(err=>{
+          console.log(err)
+        })
+      },
+      // 上一首
       forwardMusic(){
         this.audio.playing = false
         if(this.musicIndex > 0){
@@ -141,23 +186,17 @@ export default {
           // console.log(this.musicUrls.length,this.musicIndex)
         }
         this.imgUrl = this.imgUrls[this.musicIndex]
-        if(this.names[this.musicIndex].indexOf("(") > 0){
-          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
-        }else if(this.names[this.musicIndex].indexOf("（") > 0){
-          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
-        }
+        this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
         this.$refs.audio.src =  this.musicUrls[this.musicIndex];
         this.$refs.audio.autoplay = true
       },
+      // 下一首
       nextMusic(){
+        console.log(this.musicMenu)
         this.audio.playing = false
         this.musicIndex ++
         this.imgUrl = this.imgUrls[this.musicIndex]
-        if(this.names[this.musicIndex].indexOf("(") > 0){
-          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
-        }else if(this.names[this.musicIndex].indexOf("（") > 0){
-          this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
-        }
+        this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
         this.$refs.audio.src =  this.musicUrls[this.musicIndex]
         this.$refs.audio.autoplay = true
       },
@@ -204,14 +243,28 @@ export default {
           this.audio.maxTime = parseInt(res.target.duration)
       },
       // 进度条格式化toolTip
-      timeTip(index = 0) {
-          index = parseInt(this.audio.maxTime / 100 * index)
-          return '进度条: ' + realFormatSecond(index)
-      },
+      // timeTip(index = 0) {
+      //     index = parseInt(this.audio.maxTime / 100 * index)
+      //     return '进度条: ' + realFormatSecond(index)
+      // },
       // 音量进度条格式化toolTip
-      volTip() {
-          return '音量: ' + this.sliderVol
-      },
+      // volTip() {
+      //     return '音量: ' + this.sliderVol
+      // },
+      getMenu(){
+        this.names.length === 0 ? (this.getMusicDetail(),this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})) : this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})
+
+        // if(this.names.length > 0){
+        //   console.log(this.names)
+        //   this.$store.commit('toggleMenuList',this.names)
+        // }else{
+        //   this.getMusicDetail()
+        //   console.log("我是第一次啊",this.names)
+        //   this.$store.commit('toggleMenuList',this.names)
+        // }
+        
+        
+      }
   },
   filters: {
       // 使用组件过滤器来动态改变按钮的显示
@@ -327,4 +380,18 @@ export default {
 .volSlider{
   height: 10vh;
 }
+.menuList{
+  position: absolute;
+  top: 45%;
+  left: 105%;
+}
+.menuList:hover{
+  cursor: pointer;
+  font-size: 16px;
+}
+/* .el-card{
+  position: absolute;
+  top: -65%;
+  right: -12.5%;
+} */
 </style>

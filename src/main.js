@@ -8,13 +8,14 @@ import './assets/icon/iconfont.css'
 import VueParticles from 'vue-particles'
 import less from 'less'
 import './util/css/global.css'
-
+import http from '@/network/http'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueParticles)
 Vue.use(less)
 
+Vue.prototype.$http = http
 new Vue({
     router,
     store,

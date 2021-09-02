@@ -69,6 +69,22 @@ export default { //将请求暴露到全局
         let ids = data.ids.map((item) => item.id)
         let single = ids.join()
         return instance.get('/song/url?id=' + single)
+    },
+    // 获取banner(走马灯)
+    getBanner() {
+        return instance.get('/banner')
+    },
+    // 获取推荐歌单
+    getRecommandMenu() {
+        return instance.get('/personalized?limit=10')
+    },
+    // 获取独家放送
+    getOnly() {
+        return instance.get('/personalized/privatecontent/list?limit=3')
+    },
+    // 获取推荐最新音乐
+    getNewSong() {
+        return instance.get('/personalized/newsong?limit=12')
     }
 
 }
