@@ -33,16 +33,14 @@
         <div>
             <div class="more">最新音乐<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
             <div class="latestMusic commandBox">
-                <div v-for="(item,index) in newSong" :key="index">
-                    <div>
+                <div v-for="(item,index) in newSong" :key="index"  class="newSongBox">
                         <div class="left">
                             <img :src="item.picUrl" alt=""><div class="playIcon"></div>
                         </div>
                         <div class="right">
                             <div class="musicName">{{item.name}}</div>
-                            <!-- <div class="author">{{"作者:" + item.song.artists[0].name}}</div> -->
+                            <div class="author">{{"作者:" + item.song.artists[0].name}}</div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -50,11 +48,17 @@
         <div>
             <div class="more">推荐MV<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
             <div class="MV commandBox">
-                <div v-for="(item,index) in 4">
-                    <img :src="url" alt="">
-                    <span>{{"推荐MV" + index}}</span>
+                <div v-for="(item,index) in recommandMV">
+                    <img :src="item.picUrl" alt="">
+                    <span>{{item.name}}</span>
                 </div>
             </div>
+        </div>
+        <!-- 提示 -->
+        <div style="display: flex;align-items: center;justify-content: center;flex-direction: column;color:#fff;">
+            <div style="margin:8px 0;">暂时还不能改变栏目顺序       </div>
+            <div style="margin:8px 0;"> ^ - ^ </div>
+            <div style="margin:8px 0;"> @ _ @ </div>
         </div>
     </div>
 </template>
@@ -66,33 +70,40 @@ export default {
             recommandUrl:[],
             bannerUrl:[],
             onlyUrl:[],
-            newSong:[]
+            newSong:[],
+            recommandMV:[]
         }
     },
     mounted(){
         this.$http.getBanner().then(res=>{
             this.bannerUrl = res.data.banners
-            console.log(this.bannerUrl)
+            // console.log(this.bannerUrl)
         },err=>{
 
         })
         this.$http.getRecommandMenu().then(res=>{
             this.recommandUrl = res.data.result
-            console.log(this.recommandUrl)
+            // console.log(this.recommandUrl)
         },err=>{
 
         })
 
         this.$http.getOnly().then(res=>{
             this.onlyUrl = res.data.result
-            console.log(this.onlyUrl)
+            // console.log(this.onlyUrl)
         },err=>{
 
         })
 
         this.$http.getNewSong().then(res=>{
             this.newSong = res.data.result
-            console.log(this.newSong)
+            // console.log(this.newSong)
+        },err=>{
+
+        })
+        this.$http.getRecommandMV().then(res=>{
+            console.log(res)
+            this.recommandMV = res.data.result;
         },err=>{
 
         })
@@ -132,11 +143,14 @@ export default {
     width: calc(100% / 5 - 1vw);
     height: auto;
     margin: 1.5vh .5vw;
-    text-align: center;
+}
+.imgCard div:hover{
+    cursor: pointer;
 }
 .imgCard img{
     width: 100%;
     height: auto;
+    border-radius: 4px;
 }
 .onlyImg div{
     width: calc(100% / 3 - 2vw);
@@ -145,41 +159,55 @@ export default {
     font-size: .5em;
     /* text-align: center; */
 }
+.onlyImg div:hover{
+    cursor: pointer;
+}
 .onlyImg img{
     width: 100%;
     height: auto;
+    border-radius: 4px;
 }
 .latestMusic{
     width: 100%;
 }
+.latestMusic:hover{
+    cursor: default;
+}
 .latestMusic > div{
-    width: calc(100% / 3);
-    height: calc(100% / 4 - 2vw);
-}
-.latestMusic > div:hover{
-    background-color: #99a9bf;
-}
-.latestMusic .left{
-    float: left;
-    width: calc(100% / 2 - 2vw);
+    width: calc(100% / 3 - 1vw);
     height: calc(100% / 4);
+    font-size: 12px;
+    margin-right: .5vw;
+}
+
+.latestMusic .left{
+    width: calc(100% / 5);
+    float: left;
+}
+.latestMusic .left img{
+    width: 100%;
+    border-radius: 4px;
 }
 .latestMusic .right{
-    float: left;
-    width: calc(100% / 2 - 2vw);
-    height: calc(100% / 4);
+    width: 75%;
+    float: right;
 }
-.latestMusic img{
-    width: 5vw;
+.latestMusic .right .author{
+    margin-top: 2vh;
 }
 .MV div{
     width: calc(100% / 4 - 2vw);
     height: auto;
     margin: 0 1vw;
     text-align: center;
+    font-size: 12px;
 }
 .MV img{
     width: 100%;
     height: auto;
+    border-radius: 4px;
+}
+.MV div{
+    cursor: pointer;
 }
 </style>

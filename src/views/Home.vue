@@ -104,7 +104,7 @@ export default {
     MenuTab
   },
   mounted(){
-    this.$refs.scrollMenuRef.wrap.addEventListener("scroll", debounce(this.isScrollFunc,100,true));
+    this.$refs.scrollMenuRef.wrap.addEventListener("scroll", debounce(this.isScrollFunc,1000,true));
   },
   updated(){
     // console.log(this.toggle)

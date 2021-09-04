@@ -85,6 +85,10 @@ export default { //将请求暴露到全局
     // 获取推荐最新音乐
     getNewSong() {
         return instance.get('/personalized/newsong?limit=12')
+    },
+    // 获取推荐MV
+    getRecommandMV() {
+        return instance.get('/personalized/mv')
     }
 
 }

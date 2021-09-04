@@ -66,6 +66,6 @@ export default {
   font-size: 18px;
 }
 .bgBlack{
-    background-color: rgba(0, 0, 0, 0.705);
+    background-color: rgba(0, 0, 0, 0.784);
 }
 </style>
