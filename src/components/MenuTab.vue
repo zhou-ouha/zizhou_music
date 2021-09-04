@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="homeTab">
+        <div class="homeTab" :class="{bgBlack:isScroll}">
             <div class="tabBar" ref="tabBar">
                 <div v-for="(name,index) in tabName" :class="{bigSize:index === currentTabIndex}" @click="toggleTab(name,index)">
                 {{name}}<span :class="{tabLine:index === currentTabIndex}"></span>
@@ -16,6 +16,11 @@ export default {
             type:Array,
             required:true,
             default:[]
+        },
+        isScroll:{
+            type:Boolean,
+            required:true,
+            default:false
         }
     },
     data(){
@@ -59,5 +64,8 @@ export default {
 }
 .bigSize{
   font-size: 18px;
+}
+.bgBlack{
+    background-color: rgba(0, 0, 0, 0.705);
 }
 </style>

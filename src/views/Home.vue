@@ -62,15 +62,14 @@
         </el-scrollbar>
       </div>
       <div id="right">
-        <el-scrollbar style="height:100%">
+        <el-scrollbar ref="scrollMenuRef" style="height:100%">
           <div class="homeTab">
-            <menu-tab :tabName="tabName"></menu-tab>
+            <menu-tab :tabName="tabName" :isScroll="isScroll"></menu-tab>
           </div>
           
           <div>
             <router-view></router-view>
           </div>
-          
         </el-scrollbar>
       </div>
     </div>
@@ -96,6 +95,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import MenuTab from '@/components/MenuTab'
+import debounce from '@/util/debounce.js'
 export default {
   name: 'Home',
   components:{
@@ -104,8 +104,7 @@ export default {
     MenuTab
   },
   mounted(){
-    // this.toggle = this.$store.state.toggle
-    // console.log(this.toggle)
+    this.$refs.scrollMenuRef.wrap.addEventListener("scroll", debounce(this.isScrollFunc,100,true));
   },
   updated(){
     // console.log(this.toggle)
@@ -114,7 +113,10 @@ export default {
       return {
         myMenu:false,
         getMenu:false,
+        // 当前播放的音乐url
         currentMusicUrl:'',
+        // 是否滚动了
+        isScroll:false,
         // toggle:this.$store.state.toggle,
         //tab栏名称
         tabName:["个性音乐","专属定制","歌单","排行榜","歌手","最新音乐"],
@@ -139,8 +141,16 @@ export default {
       console.log(res.data[0])
       this.currentMusicUrl = res.data[index].url
       this.$store.commit('playCurrentMusic',this.currentMusicUrl);
+    },
+    isScrollFunc(){
+      if(this.$refs.scrollMenuRef.wrap.scrollTop > 0){
+        this.isScroll = true;
+      }else{
+        this.isScroll = false;
+      }
+      console.log("isScroll----"+this.isScroll);
     }
-  }
+  },
 }
 </script>
 <style scoped>
