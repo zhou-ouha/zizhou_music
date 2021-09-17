@@ -133,13 +133,12 @@ export default {
       this.getMenu = !this.getMenu
     },
     handleClick(tab,event){
-      console.log(tab.index,event)
+      console.log(tab.index,event);
     },
     async getUrl(index){
-      console.log("我被双击了",this.$store.state.ids[index].id)
-      const {data:res} = await this.$http.getMusicUrl({ids:this.$store.state.ids})
-      console.log(res.data[0])
-      this.currentMusicUrl = res.data[index].url
+      console.log("我被双击了",this.$store.state.ids[index].id);
+      this.currentMusicUrl = this.$store.state.urls[this.$store.state.currentIndex].url;
+      this.$store.commit('getCurrentIndex',index);
       this.$store.commit('playCurrentMusic',this.currentMusicUrl);
     },
     isScrollFunc(){

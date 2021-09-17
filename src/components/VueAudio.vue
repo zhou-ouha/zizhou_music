@@ -104,43 +104,6 @@ export default {
   },
   mounted(){
     this.getTotalMenu();
-    // this.$http.getMusicMenu().then(res=>{//挂载时只需加载得到精品歌单的数据即可，后面三个数据可在用户点击时获取，节省首次请求时间
-    //   console.log(res)
-    //   this.musicMenu = res.data.playlists
-    //   // get musicMenu detail
-    //   this.$http.getMusicMenuDetail({id:this.musicMenu[1].id}).then(res=>{
-    //     this.musicMenuIds = res.data.playlist.trackIds
-    //     // console.log(this.musicMenuIds)
-    //     // get music detail
-    //     // console.log(this.$http.getMusicDetail())
-    //     this.$http.getMusicDetail({ids:this.musicMenuIds}).then(res=>{
-    //       res.data.songs.pop()
-    //       console.log(res)
-    //       this.names = res.data.songs.map(item=> item.name)
-    //       this.imgUrls = res.data.songs.map(item => item.al.picUrl)
-    //       this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("（"))
-    //       console.log(this.names)
-    //       this.imgUrl = this.imgUrls[this.musicIndex]
-    //     },err=>{
-    //       console.log(err)
-    //     }).catch(err=>{
-    //       console.log(err)
-    //     })
-    //     // get music url
-    //     this.$http.getMusicUrl({ids:this.musicMenuIds}).then(res=>{
-    //       console.log(res)
-    //       res.data.data.pop()
-    //       this.musicUrls = res.data.data.map((item)=> item.url)
-    //       this.musicUrl = this.musicUrls[this.musicIndex]
-    //     }).catch(err=>{
-    //       console.log(err)
-    //     })
-    //   },err=>{
-
-    //   })
-    // },err=>{
-
-    // })
     
   },
   methods: {
@@ -159,10 +122,10 @@ export default {
         res.songs.pop()
         this.names = res.songs.map(item=> item.name)
         this.imgUrls = res.songs.map(item => item.al.picUrl)
-        // 
-        this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
+        // .slice(0,this.names[this.$store.state.currentIndex].indexOf("("))
+        this.musicName = this.names[this.$store.state.currentIndex]
         console.log(this.musicName)
-        this.imgUrl = this.imgUrls[this.musicIndex]
+        this.imgUrl = this.imgUrls[this.$store.state.currentIndex]
       },
       // 获取音乐url
       async getMusicUrl(){
@@ -170,7 +133,7 @@ export default {
           console.log(res)
           res.data.data.pop()
           this.musicUrls = res.data.data.map((item)=> item.url)
-          this.musicUrl = this.musicUrls[this.musicIndex]
+          this.musicUrl = this.musicUrls[this.$store.state.currentIndex]
         }).catch(err=>{
           console.log(err)
         })
@@ -178,26 +141,32 @@ export default {
       // 上一首
       forwardMusic(){
         this.audio.playing = false
-        if(this.musicIndex > 0){
-          this.musicIndex --
+        if(this.$store.state.currentIndex > 0){
+          // this.musicIndex --
+          this.$store.commit('changeCurrentIndex','-');
         }else{
           // console.log("我是0号位置")
-          this.musicIndex = this.musicUrls.length - 1
-          // console.log(this.musicUrls.length,this.musicIndex)
+          this.musicIndex = this.musicUrls.length - 1;
+          // console.log(this.musicUrls.length,this.$store.state.currentIndex)
         }
-        this.imgUrl = this.imgUrls[this.musicIndex]
-        this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
-        this.$refs.audio.src =  this.musicUrls[this.musicIndex];
-        this.$refs.audio.autoplay = true
+        this.imgUrl = this.imgUrls[this.$store.state.currentIndex];
+        this.musicName = this.names[this.$store.state.currentIndex]
+        // .slice(0,this.names[this.$store.state.currentIndex].indexOf("("))
+        this.$refs.audio.src =  this.$store.state.urls[this.$store.state.currentIndex].url;
+        this.$refs.audio.autoplay = true;
       },
       // 下一首
       nextMusic(){
         console.log(this.musicMenu)
         this.audio.playing = false
-        this.musicIndex ++
-        this.imgUrl = this.imgUrls[this.musicIndex]
-        this.musicName = this.names[this.musicIndex].slice(0,this.names[this.musicIndex].indexOf("("))
-        this.$refs.audio.src =  this.musicUrls[this.musicIndex]
+        // this.musicIndex ++
+        this.$store.commit('changeCurrentIndex','+');
+        console.log(this.$store.state.currentIndex)
+        this.imgUrl = this.imgUrls[this.$store.state.currentIndex]
+        // .slice(0,this.names[this.$store.state.currentIndex].indexOf("("))
+        this.musicName = this.names[this.$store.state.currentIndex]
+        this.$refs.audio.src =  this.$store.state.urls[this.$store.state.currentIndex].url
+        console.log(this.$store.state.urls)
         this.$refs.audio.autoplay = true
       },
       // 拖动进度条，改变当前时间，index是进度条改变时的回调函数的参数0-100之间，需要换算成实际时间
@@ -242,28 +211,10 @@ export default {
           console.log(res)
           this.audio.maxTime = parseInt(res.target.duration)
       },
-      // 进度条格式化toolTip
-      // timeTip(index = 0) {
-      //     index = parseInt(this.audio.maxTime / 100 * index)
-      //     return '进度条: ' + realFormatSecond(index)
-      // },
-      // 音量进度条格式化toolTip
-      // volTip() {
-      //     return '音量: ' + this.sliderVol
-      // },
-      getMenu(){
-        this.names.length === 0 ? (this.getMusicDetail(),this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})) : this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})
-
-        // if(this.names.length > 0){
-        //   console.log(this.names)
-        //   this.$store.commit('toggleMenuList',this.names)
-        // }else{
-        //   this.getMusicDetail()
-        //   console.log("我是第一次啊",this.names)
-        //   this.$store.commit('toggleMenuList',this.names)
-        // }
-        
-        
+      async getMenu(){
+        this.names.length === 0 ? (this.getMusicDetail(),this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})) : this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds});
+        const {data:res} = await this.$http.getMusicUrl({ids:this.$store.state.ids});
+        this.$store.commit('getUrls',res.data);
       }
   },
   filters: {
