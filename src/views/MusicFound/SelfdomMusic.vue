@@ -14,7 +14,7 @@
             <div class="imgCard commandBox">
                 <div v-for="(item,index) in recommandUrl" :key="index">
                     <img :src="item.picUrl" alt="">
-                    <span style="font-size:.5em">{{item.name}}</span>
+                    <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
                 </div>
 
             </div>
@@ -143,6 +143,7 @@ export default {
     width: calc(100% / 5 - 1vw);
     height: auto;
     margin: 1.5vh .5vw;
+    text-align: center;
 }
 .imgCard div:hover{
     cursor: pointer;
@@ -151,6 +152,10 @@ export default {
     width: 100%;
     height: auto;
     border-radius: 4px;
+}
+.imgCard .menuName{
+    display: inline-block;
+    text-align: start;
 }
 .onlyImg div{
     width: calc(100% / 3 - 2vw);
