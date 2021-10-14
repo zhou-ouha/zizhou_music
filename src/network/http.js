@@ -89,6 +89,10 @@ export default { //将请求暴露到全局
     // 获取推荐MV
     getRecommandMV() {
         return instance.get('/personalized/mv')
+    },
+    // 获取歌词
+    getLyric(id) {
+        return instance.get('/lyric?id=' + id)
     }
 
 }

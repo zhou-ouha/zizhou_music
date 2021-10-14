@@ -13,7 +13,6 @@
             @timeupdate="onTimeupdate"
             @loadedmetadata="onLoadedmetadata"
             :src="this.$store.state.currentMusicUrl"></audio>
-    
     <!-- 音频播放控件 -->
     <div id="controls">
       <!-- 播放，上一首，下一首 -->
@@ -34,10 +33,15 @@
     
     <!-- 音量 -->
     <div>
+      <span class="iconfont" @click="getLyric">&#xe617;</span>
       <span class="iconfont menuList" @click="getMenu">&#xe6a7;</span>
       <span class="iconfont volIcon">&#xe62d;</span>
       <div class="vol">
-        <el-slider vertical v-model="sliderVol" :show-tooltip="false" @change="changeCurrentVol" class="volSlider" ></el-slider>
+        <el-slider vertical 
+          v-model="sliderVol" 
+          :show-tooltip="false" 
+          @change="changeCurrentVol" 
+          class="volSlider" ></el-slider>
       </div>
     </div>
     <!-- 音乐列表 -->
@@ -49,23 +53,7 @@
 
 <script>
 // import http from '@/network/http'
-// 将整数转换成 时：分：秒的格式
-function realFormatSecond(second) {
-  var secondType = typeof second
-
-  if (secondType === 'number' || secondType === 'string') {
-    second = parseInt(second)
-
-    var hours = Math.floor(second / 3600)
-    second = second - hours * 3600
-    var mimute = Math.floor(second / 60)
-    second = second - mimute * 60
-
-    return ('0' + mimute).slice(-2) + ':' + ('0' + second).slice(-2)
-  } else {
-    return '00:00'
-  }
-}
+import realFormatSecond from '@/util/tool/realFormatSecond.js'
 export default {
   data () {
     return {
@@ -99,12 +87,10 @@ export default {
           // 音频最大播放时长
           maxTime: 0
       },
-      res:''
     }
   },
   mounted(){
     this.getTotalMenu();
-    
   },
   methods: {
       //歌单（网友精选碟）(同时获取歌单详情)
@@ -199,8 +185,7 @@ export default {
       },
       // 当timeupdate事件大概每秒一次，用来更新音频流的当前播放时间
       onTimeupdate(res) {
-          console.log('timeupdate')
-          // console.log(res)
+          // console.log('timeupdate')
           this.audio.currentTime = res.target.currentTime
           this.sliderTime = parseInt(this.audio.currentTime / this.audio.maxTime * 100)
       },
@@ -215,7 +200,16 @@ export default {
         this.names.length === 0 ? (this.getMusicDetail(),this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})) : this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds});
         const {data:res} = await this.$http.getMusicUrl({ids:this.$store.state.ids});
         this.$store.commit('getUrls',res.data);
-      }
+      },
+      async getLyric(){
+        const {data:res} = await this.$http.getLyric(this.$store.state.ids[this.$store.state.currentIndex].id);
+        console.log(res.lrc.lyric);
+        let regx = /\[.........\]/g;
+        let result = res.lrc.lyric.match(regx);
+        console.log(result);
+        console.log("maxTime------"+this.audio.maxTime)
+      },
+      
   },
   filters: {
       // 使用组件过滤器来动态改变按钮的显示

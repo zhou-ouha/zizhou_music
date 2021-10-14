@@ -12,7 +12,10 @@
         <div>
             <div class="more">推荐歌单<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
             <div class="imgCard commandBox">
-                <div v-for="(item,index) in recommandUrl" :key="index">
+                <div 
+                @click="getDetail"
+                v-for="(item,index) in recommandUrl" 
+                :key="index">
                     <img :src="item.picUrl" alt="">
                     <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
                 </div>
@@ -77,27 +80,23 @@ export default {
     mounted(){
         this.$http.getBanner().then(res=>{
             this.bannerUrl = res.data.banners
-            // console.log(this.bannerUrl)
         },err=>{
 
         })
         this.$http.getRecommandMenu().then(res=>{
             this.recommandUrl = res.data.result
-            // console.log(this.recommandUrl)
         },err=>{
 
         })
 
         this.$http.getOnly().then(res=>{
             this.onlyUrl = res.data.result
-            // console.log(this.onlyUrl)
         },err=>{
 
         })
 
         this.$http.getNewSong().then(res=>{
             this.newSong = res.data.result
-            // console.log(this.newSong)
         },err=>{
 
         })
@@ -107,6 +106,11 @@ export default {
         },err=>{
 
         })
+    },
+    methods:{
+        getDetail(){
+            this.$router.push(this.$router.options.routes[1].path)
+        }
     }
 }
 </script>

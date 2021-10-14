@@ -9,13 +9,13 @@ module.exports = {
         // https://netease-cloud-music-api-zizhou.vercel.app
         proxy: { //配置多个代理
             "": {
-                target: "http://localhost:3000",
+                target: "http://www.zizhou.icu:3000",
                 open: process.platform === 'darwin',
                 changeOrigin: true,
                 ws: false,
                 secure: false,
                 pathRewrite: {
-                    "^": "http://localhost:3000"
+                    "^": "http://www.zizhou.icu:3000"
                 }
             }
         }

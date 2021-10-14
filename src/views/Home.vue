@@ -63,13 +63,15 @@
       </div>
       <div id="right">
         <el-scrollbar ref="scrollMenuRef" style="height:100%">
-          <div class="homeTab">
-            <menu-tab :tabName="tabName" :isScroll="isScroll"></menu-tab>
+          <div>
+            <div class="homeTab" v-show="showMenuDetail">
+              <menu-tab :tabName="tabName" :isScroll="isScroll"></menu-tab>
+            </div>
+            <div>
+              <router-view></router-view>
+            </div>
           </div>
           
-          <div>
-            <router-view></router-view>
-          </div>
         </el-scrollbar>
       </div>
     </div>
@@ -95,7 +97,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import MenuTab from '@/components/MenuTab'
-import debounce from '@/util/debounce.js'
+import throttle from '@/util/tool/throttle.js'
 export default {
   name: 'Home',
   components:{
@@ -104,7 +106,7 @@ export default {
     MenuTab
   },
   mounted(){
-    this.$refs.scrollMenuRef.wrap.addEventListener("scroll", debounce(this.isScrollFunc,1000,true));
+    this.$refs.scrollMenuRef.wrap.addEventListener("scroll", throttle(this.isScrollFunc,100,true));
   },
   updated(){
     // console.log(this.toggle)
@@ -120,6 +122,8 @@ export default {
         // toggle:this.$store.state.toggle,
         //tab栏名称
         tabName:["个性音乐","专属定制","歌单","排行榜","歌手","最新音乐"],
+        // 是否显示tab栏
+        showMenuDetail:true,
         //当前选中的tab
         currentTabIndex:0,
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
