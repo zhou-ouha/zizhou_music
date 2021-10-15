@@ -1,11 +1,7 @@
 <template>
   <div id="audioBody">
     <div class="detail">
-      <img src="../static/imgs/empty.webp" alt="" v-if="!imgUrl">
-      <img :src="imgUrl" v-else>
-      <div>
-        {{musicName}}
-      </div>
+      <PlayerImg :src="imgUrl" :musicName="musicName"></PlayerImg>
     </div>
     <audio ref="audio"
             @pause="onPause"
@@ -27,7 +23,11 @@
       <!-- 时间进度条 -->
       <div class="timeProgress">
         <span class="time">{{ audio.currentTime | formatSecond }}/{{ audio.maxTime | formatSecond }}</span>
-        <el-slider v-model="sliderTime" :show-tooltip="false" @change="changeCurrentTime" class="slider"></el-slider>
+        <el-slider 
+        v-model="sliderTime" 
+        :show-tooltip="false" 
+        @change="changeCurrentTime" 
+        class="slider"></el-slider>
       </div>
     </div>
     
@@ -54,7 +54,11 @@
 <script>
 // import http from '@/network/http'
 import realFormatSecond from '@/util/tool/realFormatSecond.js'
+import PlayerImg from '@/components/player/PlayerImg'
 export default {
+  components:{
+      PlayerImg
+  },
   data () {
     return {
       detail:'',
@@ -249,18 +253,6 @@ export default {
   position: relative;
   top: 2px;
   left: -12%;
-}
-.detail img{
-  width: 60px;
-  height: auto;
-}
-.detail div{
-  width: 10vw;
-  position: absolute;
-  top: 0;
-  left: 66px;
-  font-size: 12px;
-  color: #333;
 }
 .text {
   font-size: 14px;

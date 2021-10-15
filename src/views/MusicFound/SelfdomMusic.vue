@@ -19,7 +19,9 @@
                     <img :src="item.picUrl" alt="">
                     <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
                 </div>
-
+                <div>
+                    <router-view></router-view>
+                </div>
             </div>
         </div>
         <!-- 独家放送 -->
@@ -109,7 +111,8 @@ export default {
     },
     methods:{
         getDetail(){
-            this.$router.push(this.$router.options.routes[1].path)
+            this.$store.commit('toggleHide');
+            this.$router.push('/MenuDetail')
         }
     }
 }

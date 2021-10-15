@@ -17,6 +17,7 @@ export default new vuex.Store({
         currentIndex: 0,
         // 是否播放
         isPlay: false,
+        hideTab: false
     },
     mutations: {
         toggleMenuList(state, data) {
@@ -47,6 +48,10 @@ export default new vuex.Store({
         },
         getUrls(state, url) {
             state.urls = url
+        },
+        toggleHide(state) {
+            console.log(this)
+            state.hideTab = true;
         }
     },
     getters: {

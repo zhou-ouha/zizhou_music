@@ -64,14 +64,13 @@
       <div id="right">
         <el-scrollbar ref="scrollMenuRef" style="height:100%">
           <div>
-            <div class="homeTab" v-show="showMenuDetail">
+            <div class="homeTab" v-show="!this.$store.state.hideTab">
               <menu-tab :tabName="tabName" :isScroll="isScroll"></menu-tab>
             </div>
             <div>
               <router-view></router-view>
             </div>
           </div>
-          
         </el-scrollbar>
       </div>
     </div>
@@ -130,6 +129,9 @@ export default {
       }
   },
   methods:{
+    hideTab(res){
+      console.log(res)
+    },
     toggleMyMenu(){
       this.myMenu = !this.myMenu
     },
@@ -154,6 +156,11 @@ export default {
       console.log("isScroll----"+this.isScroll);
     }
   },
+  watch:{
+    $router:{
+
+    }
+  }
 }
 </script>
 <style scoped>
