@@ -200,11 +200,11 @@ export default {
           console.log(res)
           this.audio.maxTime = parseInt(res.target.duration)
       },
-      async getMenu(){
-        this.names.length === 0 ? (this.getMusicDetail(),this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})) : this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds});
-        const {data:res} = await this.$http.getMusicUrl({ids:this.$store.state.ids});
-        this.$store.commit('getUrls',res.data);
-      },
+      // async getMenu(){
+      //   this.names.length === 0 ? (this.getMusicDetail(),this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})) : this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds});
+      //   const {data:res} = await this.$http.getMusicUrl({ids:this.$store.state.ids});
+      //   this.$store.commit('getUrls',res.data);
+      // },
       async getLyric(){
         const {data:res} = await this.$http.getLyric(this.$store.state.ids[this.$store.state.currentIndex].id);
         console.log(res.lrc.lyric);

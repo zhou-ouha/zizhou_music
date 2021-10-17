@@ -15,7 +15,8 @@
                 <div 
                 @click="getDetail"
                 v-for="(item,index) in recommandUrl" 
-                :key="index">
+                :key="index"
+                >
                     <img :src="item.picUrl" alt="">
                     <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
                 </div>
@@ -78,7 +79,7 @@ export default {
             newSong:[],
             recommandMV:[]
         }
-    },
+    },    
     mounted(){
         this.$http.getBanner().then(res=>{
             this.bannerUrl = res.data.banners
