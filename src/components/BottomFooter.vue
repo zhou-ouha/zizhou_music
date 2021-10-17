@@ -38,5 +38,6 @@ export default {
     flex-direction: row;
     position: relative;
     z-index: 99999;
+    bottom: 0;
 }
 </style>

@@ -1,5 +1,11 @@
 /* 全局修改slider的样式 */
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .el-slider__button {
     width: 6px;
     height: 6px;

@@ -18,9 +18,34 @@
       clickMode="push"
       class="lizi"
     ></vue-particles>
-    <router-view/>
+    <!-- <router-view/> -->
+    <div class="home">
+      <TopHeader></TopHeader>
+      <div id="main">
+        <!-- 左侧菜单 -->
+        <BodyLeft></BodyLeft>
+        <BodyRight></BodyRight>
+      </div>
+      <MusicList></MusicList>   
+      <BottomFooter></BottomFooter>
+    </div>
   </div>
 </template>
+<script>
+import TopHeader from '@/components/TopHeader'
+import BottomFooter from '@/components/BottomFooter'
+import BodyLeft from '@/layout/BodyLeft'
+import BodyRight from '@/layout/BodyRight'
+import MusicList from '@/player/MusicList'
+export default {
+  components:{
+    TopHeader,
+    BottomFooter,
+    BodyLeft,
+    BodyRight,
+    MusicList}
+}
+</script>
 
 <style>
 
@@ -35,5 +60,18 @@
 
 .lizi {
   background-color: #ffffff;
+}
+.home{
+  width: 100%;
+  margin: 0 auto;
+}
+#main{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+}
+::-webkit-scrollbar{
+  display:none;
 }
 </style>
