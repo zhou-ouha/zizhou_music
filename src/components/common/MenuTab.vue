@@ -17,9 +17,14 @@ export default {
             required:true,
             default:[]
         },
+        tabPath:{
+            type:Array,
+            required:true,
+            default:[]
+        },
         isScroll:{
             type:Boolean,
-            required:true,
+            required:false,
             default:false
         }
     },
@@ -31,7 +36,9 @@ export default {
     methods:{
         toggleTab(name,index){
             this.currentTabIndex = index
-            this.$router.push(this.$router.options.routes[0].children[index].path)
+            console.log(this.tabPath[this.currentTabIndex],name)
+            // this.$router.push(this.$router.options.routes[index].path)
+            this.$router.push(this.tabPath[this.currentTabIndex]);
         }
     }
 }
@@ -66,6 +73,6 @@ export default {
   font-size: 18px;
 }
 .bgBlack{
-    background-color: rgba(0, 0, 0, 0.784);
+    background-color: rgba(4, 4, 4, 0.411);
 }
 </style>

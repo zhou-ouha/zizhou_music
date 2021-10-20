@@ -112,7 +112,6 @@ export default {
     },
     methods:{
         getDetail(){
-            this.$store.commit('toggleHide');
             this.$router.push('/MenuDetail')
         }
     }

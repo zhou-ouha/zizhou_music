@@ -44,3 +44,39 @@ body {
     position: relative;
     display: none!important;
 }
+
+
+/* 按钮悬浮效果 */
+
+.el-button--danger:focus,
+.el-button--danger:hover {
+    background: #FE3C32;
+    border-color: #FE3C32;
+    color: #FFF;
+}
+
+
+/* 歌曲列表样式 */
+
+.el-table,
+.el-table__expanded-cell {
+    color: #fff;
+}
+
+.el-table--enable-row-hover .el-table__body tr>td {
+    background-color: transparent !important;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover>td {
+    cursor: pointer;
+    background-color: rgba(93, 90, 90, 0.274) !important;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+    background: rgba(66, 64, 64, 0.308);
+}
+
+.el-table td,
+.el-table th.is-leaf {
+    border-bottom: 1px solid rgba(46, 43, 43, 0.226);
+}

@@ -54,7 +54,7 @@
 <script>
 // import http from '@/network/http'
 import realFormatSecond from '@/util/tool/realFormatSecond.js'
-import PlayerImg from '@/components/player/PlayerImg'
+import PlayerImg from '@/player/PlayerImg'
 export default {
   components:{
       PlayerImg
@@ -274,7 +274,7 @@ export default {
   /* color: #fff; */
 }
 .play{
-  font-size: 32px;
+  font-size: 35px;
   margin: 2vw;
   cursor: pointer;
   /* color: #fff; */
@@ -287,7 +287,7 @@ export default {
   left: -60px;
 }
 .slider{
-  width: 25vw;
+  width: 32vw;
   display: inline-block;
   margin-left: 2vw;
 }

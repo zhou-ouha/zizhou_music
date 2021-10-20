@@ -3,32 +3,46 @@
         <div>
             <div><i class="iconfont" style="font-size:12px ">&#xe605;</i></div>
         </div>
-        
-        <div><DetailHeader></DetailHeader></div>
-        
-        <div>评论组件</div>
-        <div>收藏者组件</div>
+        <div class="header"><DetailHeader></DetailHeader></div>
+        <div class="main">
+            <MenuTab :tabName="tabName" :tabPath="tabPath"></MenuTab>
+        </div>
+        <div>
+            <router-view></router-view>
+        </div>
     </div>
 </template>    
 <script>
-import DetailHeader from '@/components/content/DetailHeader'
+import MenuTab from '@/components/common/MenuTab'
+import DetailHeader from '@/components/content/Detail/DetailHeader'
 export default {
     components:{
-        DetailHeader
+        DetailHeader, 
+        MenuTab
     },
     data(){
         return {
-            
+            tabName:["歌曲列表","评论","收藏者"],
+            tabPath:['/MenuDetail','/DetailCommand','/DetailCollector']
         }
     },
     mounted:{
     },
     methods:{
         async getMusicDetail(){
-            const {data:res} = await this.$http.getMusicDetail({ids:this.musicMenuIds});
+            // const {data:res} = await this.$http.getMusicDetail({ids:this.musicMenuIds});
       },
     }
 }
 </script>
 <style scoped>
+.header{
+    display: flex;
+    justify-content: start;
+    align-content: center;
+    margin-left: 2vw;
+}
+.main{
+    margin-top: 2vh;
+}
 </style>

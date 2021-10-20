@@ -85,7 +85,7 @@ export default {
 <style scoped>
 #left{
   width: 12%;
-  height: calc(100vh - 18vh);
+  height: calc(100vh - 19vh);
   background-color: rgba(5, 5, 5, 0.308);
   overflow: hidden;
 }

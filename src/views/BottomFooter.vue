@@ -31,7 +31,7 @@ export default {
 <style scoped>
 #footer{
     width: 100%;
-    height: 9vh;
+    height: 10vh;
     background-color: rgba(0, 0, 0, 0.308);
     margin: 0 auto;
     display: flex;

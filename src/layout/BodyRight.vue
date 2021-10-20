@@ -3,7 +3,7 @@
         <el-scrollbar ref="scrollMenuRef" style="height:100%">
           <div>
             <div class="homeTab" v-show="!this.$store.state.hideTab">
-              <MenuTab :tabName="tabName" :isScroll="isScroll"></MenuTab>
+              <MenuTab :tabName="tabName" :tabPath="tabPath" :isScroll="isScroll"></MenuTab>
             </div>
             <div>
               <router-view></router-view>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import MenuTab from '@/components/MenuTab'
+import MenuTab from '@/components/common/MenuTab'
 import throttle from '@/util/tool/throttle.js'
 export default {
   components:{
@@ -32,6 +32,7 @@ export default {
       //当前选中的tab
       currentTabIndex:0,
       tabName:["个性音乐","专属定制","歌单","排行榜","歌手","最新音乐"],
+      tabPath:["/","/PersonalIndividual","/MusicMenu","/LeaderBoard","/Vocalist","/LatestMusic",]
     }
   },
   methods:{
@@ -57,8 +58,8 @@ export default {
 <style scoped>
 #right{
   width: 88%;
-  height: calc(100vh - 18vh);
-  background-color: rgba(4, 4, 4, 0.726);
+  height: calc(100vh - 19vh);
+  background-color: rgba(10, 10, 10, 0.726);
   overflow: hidden;
 }
 .homeTab{

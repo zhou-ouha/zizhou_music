@@ -14,7 +14,6 @@
 <script>
 // @ is an alias to /src
 
-import MenuTab from '@/components/MenuTab'
 
 export default {
   name: 'Home',

@@ -32,8 +32,8 @@
   </div>
 </template>
 <script>
-import TopHeader from '@/components/TopHeader'
-import BottomFooter from '@/components/BottomFooter'
+import TopHeader from '@/views/TopHeader'
+import BottomFooter from '@/views/BottomFooter'
 import BodyLeft from '@/layout/BodyLeft'
 import BodyRight from '@/layout/BodyRight'
 import MusicList from '@/player/MusicList'
@@ -63,7 +63,7 @@ export default {
 }
 .home{
   width: 100%;
-  margin: 0 auto;
+  height: 100vh;
 }
 #main{
   width: 100%;
