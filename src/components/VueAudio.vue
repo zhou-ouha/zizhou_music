@@ -13,12 +13,10 @@
     <div id="controls">
       <!-- 播放，上一首，下一首 -->
       <div class="playControls">
-        <el-button-group>
-          <span class="iconfont forward" @click="forwardMusic">&#xeb06;</span>
-          <span class="iconfont play" @click="startPlayOrPause" v-show="audio.playing == false">&#xe610;</span>
-          <span class="iconfont play" @click="startPlayOrPause" v-show="audio.playing == true">&#xeb18;</span>
-          <span class="iconfont next" @click="nextMusic">&#xeb07;</span>
-        </el-button-group>
+        <span class="iconfont forward" @click="forwardMusic">&#xeb06;</span>
+        <span class="iconfont play" @click="startPlayOrPause" v-show="audio.playing == false">&#xe610;</span>
+        <span class="iconfont play" @click="startPlayOrPause" v-show="audio.playing == true">&#xeb18;</span>
+        <span class="iconfont next" @click="nextMusic">&#xeb07;</span>
       </div>
       <!-- 时间进度条 -->
       <div class="timeProgress">
@@ -30,7 +28,6 @@
         class="slider"></el-slider>
       </div>
     </div>
-    
     <!-- 音量 -->
     <div>
       <span class="iconfont" @click="getLyric">&#xe617;</span>
@@ -97,37 +94,6 @@ export default {
     this.getTotalMenu();
   },
   methods: {
-      //歌单（网友精选碟）(同时获取歌单详情)
-      async getTotalMenu(){
-        const {data:musicMenu} = await this.$http.getMusicMenu();
-        this.musicMenu = musicMenu.playlists;
-        const {data:res} = await this.$http.getMusicMenuDetail({id:this.musicMenu[1].id});
-        this.musicMenuIds = res.playlist.trackIds;
-        console.log(this.musicMenuIds)
-      },
-      // 获取歌曲详情
-      async getMusicDetail(){
-        const {data:res} = await this.$http.getMusicDetail({ids:this.musicMenuIds});
-        console.log(res)
-        res.songs.pop()
-        this.names = res.songs.map(item=> item.name)
-        this.imgUrls = res.songs.map(item => item.al.picUrl)
-        // .slice(0,this.names[this.$store.state.currentIndex].indexOf("("))
-        this.musicName = this.names[this.$store.state.currentIndex]
-        console.log(this.musicName)
-        this.imgUrl = this.imgUrls[this.$store.state.currentIndex]
-      },
-      // 获取音乐url
-      async getMusicUrl(){
-        this.$http.getMusicUrl({ids:this.musicMenuIds}).then(res=>{
-          console.log(res)
-          res.data.data.pop()
-          this.musicUrls = res.data.data.map((item)=> item.url)
-          this.musicUrl = this.musicUrls[this.$store.state.currentIndex]
-        }).catch(err=>{
-          console.log(err)
-        })
-      },
       // 上一首
       forwardMusic(){
         this.audio.playing = false
@@ -200,11 +166,6 @@ export default {
           console.log(res)
           this.audio.maxTime = parseInt(res.target.duration)
       },
-      // async getMenu(){
-      //   this.names.length === 0 ? (this.getMusicDetail(),this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds})) : this.$store.commit('toggleMenuList',{names:this.names,ids:this.musicMenuIds});
-      //   const {data:res} = await this.$http.getMusicUrl({ids:this.$store.state.ids});
-      //   this.$store.commit('getUrls',res.data);
-      // },
       async getLyric(){
         const {data:res} = await this.$http.getLyric(this.$store.state.ids[this.$store.state.currentIndex].id);
         console.log(res.lrc.lyric);

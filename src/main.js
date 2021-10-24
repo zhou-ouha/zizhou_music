@@ -19,5 +19,8 @@ Vue.prototype.$http = http
 new Vue({
     router,
     store,
+    beforeCreate() {
+        Vue.prototype.$bus = this //安装全局事件总线
+    },
     render: h => h(App)
 }).$mount('#app')

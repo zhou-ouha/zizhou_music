@@ -11,15 +11,8 @@
         <!-- 推荐歌单 -->
         <div>
             <div class="more">推荐歌单<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
-            <div class="imgCard commandBox">
-                <div 
-                @click="getDetail"
-                v-for="(item,index) in recommandUrl" 
-                :key="index"
-                >
-                    <img :src="item.picUrl" alt="">
-                    <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
-                </div>
+            <div>
+                <RecommandMenu :recommandUrl="recommandUrl"></RecommandMenu>
                 <div>
                     <router-view></router-view>
                 </div>
@@ -69,7 +62,11 @@
     </div>
 </template>
 <script>
+import RecommandMenu from '@/components/content/Menu/RecommandMenu'
 export default {
+    components:{
+        RecommandMenu
+    },
     data(){
         return {
             url:'https://img0.baidu.com/it/u=103721101,4076571305&fm=26&fmt=auto&gp=0.jpg',
@@ -77,7 +74,7 @@ export default {
             bannerUrl:[],
             onlyUrl:[],
             newSong:[],
-            recommandMV:[]
+            recommandMV:[],
         }
     },    
     mounted(){
@@ -88,6 +85,7 @@ export default {
         })
         this.$http.getRecommandMenu().then(res=>{
             this.recommandUrl = res.data.result
+            console.log("------",res)//这里有封面相关信息，无需获取歌单详情
         },err=>{
 
         })
@@ -111,9 +109,7 @@ export default {
         })
     },
     methods:{
-        getDetail(){
-            this.$router.push('/MenuDetail')
-        }
+        
     }
 }
 </script>
@@ -139,31 +135,7 @@ export default {
 .more{
     color: #fff;
 }
-.commandBox{
-    padding: 2vh 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    color: #fff;
-}
-.imgCard div{
-    width: calc(100% / 5 - 1vw);
-    height: auto;
-    margin: 1.5vh .5vw;
-    text-align: center;
-}
-.imgCard div:hover{
-    cursor: pointer;
-}
-.imgCard img{
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-.imgCard .menuName{
-    display: inline-block;
-    text-align: start;
-}
+
 .onlyImg div{
     width: calc(100% / 3 - 2vw);
     height: auto;

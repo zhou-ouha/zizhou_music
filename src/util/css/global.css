@@ -48,11 +48,30 @@ body {
 
 /* 按钮悬浮效果 */
 
+.el-button--danger {
+    background: #FE3C32;
+    border-color: #FE3C32;
+    color: #FFF;
+}
+
+.el-button--default {
+    background: rgba(10, 10, 10, 0.274);
+    border-color: rgba(10, 10, 10, 0.274);
+    color: #fff;
+}
+
 .el-button--danger:focus,
 .el-button--danger:hover {
     background: #FE3C32;
     border-color: #FE3C32;
     color: #FFF;
+}
+
+.el-button--default:focus,
+.el-button--default:hover {
+    background: rgba(10, 10, 10, 0.274);
+    border-color: rgba(10, 10, 10, 0.274);
+    color: #fff;
 }
 
 
@@ -79,4 +98,22 @@ body {
 .el-table td,
 .el-table th.is-leaf {
     border-bottom: 1px solid rgba(46, 43, 43, 0.226);
+}
+
+.el-table__empty-block {
+    min-height: 60px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(34, 33, 33, 0.822) !important;
+    border-bottom: 1px solid rgba(34, 33, 33, 0.822);
+}
+
+.el-table__empty-text {
+    line-height: 60px;
+    width: 50%;
+    color: #fff;
+    background: transparent;
 }

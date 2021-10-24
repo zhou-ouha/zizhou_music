@@ -3,7 +3,7 @@
         <div>
             <div><i class="iconfont" style="font-size:12px ">&#xe605;</i></div>
         </div>
-        <div class="header"><DetailHeader></DetailHeader></div>
+        <div class="header"><DetailHeader :list="playList"></DetailHeader></div>
         <div class="main">
             <MenuTab :tabName="tabName" :tabPath="tabPath"></MenuTab>
         </div>
@@ -23,15 +23,21 @@ export default {
     data(){
         return {
             tabName:["歌曲列表","评论","收藏者"],
-            tabPath:['/MenuDetail','/DetailCommand','/DetailCollector']
+            tabPath:['/MenuDetail','/DetailCommand','/DetailCollector'],
+            id:0,
+            playList:{}
         }
     },
-    mounted:{
+    mounted(){
+        this.id = this.$route.params.id
+        this.getMusicDetail();
     },
     methods:{
         async getMusicDetail(){
-            // const {data:res} = await this.$http.getMusicDetail({ids:this.musicMenuIds});
-      },
+            const {data:res} = await this.$http.getMusicMenuDetail(this.id);
+            this.$bus.$emit('musicList',res.playlist.trackIds)
+            this.playList = res.playlist
+        },
     }
 }
 </script>

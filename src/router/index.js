@@ -49,12 +49,12 @@ const routes = [{
             import ("@/views/MusicFound/LatestMusic.vue"),
     },
     {
-        path: '/MenuDetail',
+        path: '/MenuDetail/:id',
         name: 'MenuDetail',
         component: MenuDetail,
-        redirect: 'DetailList',
+        redirect: 'DetailList/:id',
         children: [{
-                path: '/DetailList',
+                path: '/DetailList/:id',
                 name: DetailList,
                 component: DetailList
             },

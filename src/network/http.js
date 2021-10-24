@@ -55,20 +55,16 @@ export default { //将请求暴露到全局
         return instance.get('/top/playlist?limit=10&order=hot')
     },
     // 使用歌单id获取歌单详情，得到trackids
-    getMusicMenuDetail(data) {
-        return instance.get('/playlist/detail?id=' + data.id)
+    getMusicMenuDetail(id) {
+        return instance.get('/playlist/detail?' + id)
     },
     // 使用trackids获取歌曲详情
     getMusicDetail(data) {
-        let ids = data.ids.map((item) => item.id)
-        let single = ids.join()
-        return instance.get('/song/detail?ids=' + single)
+        return instance.get('/song/detail?ids=' + data)
     },
     // 获取音乐url
     getMusicUrl(data) {
-        let ids = data.ids.map((item) => item.id)
-        let single = ids.join()
-        return instance.get('/song/url?id=' + single)
+        return instance.get('/song/url?' + data)
     },
     // 获取banner(走马灯)
     getBanner() {
