@@ -31,7 +31,7 @@
     <!-- 音量 -->
     <div>
       <span class="iconfont" @click="getLyric">&#xe617;</span>
-      <span class="iconfont menuList" @click="getMenu">&#xe6a7;</span>
+      <span class="iconfont menuList">&#xe6a7;</span>
       <span class="iconfont volIcon">&#xe62d;</span>
       <div class="vol">
         <el-slider vertical 
@@ -91,7 +91,7 @@ export default {
     }
   },
   mounted(){
-    this.getTotalMenu();
+    // this.getTotalMenu();
   },
   methods: {
       // 上一首

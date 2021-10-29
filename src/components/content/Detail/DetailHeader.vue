@@ -1,6 +1,6 @@
 <template>
   <div class="menuHead">
-      <div class="left"><img :src="list.coverImgUrl"></div>
+      <div class="left"><img :src="info.img"></div>
       <div class="right">
           <!-- 歌单名称 -->
           <div class="menuName margin_b_4">
@@ -12,26 +12,26 @@
                   color="transparent"
                   style="position:relative;top:-10px;" 
                 >歌单</el-tag>
-                {{list.name}}
+                {{info.name}}
             </div>
           </div>
           <!-- 歌单作者 -->
           <div class="margin_b_4 author">
-            <span>创建者：{{list.creator.nickname}}</span>
+            <span>创建者：{{info.creatorName}}</span>
             <span></span>
           </div>
           <!-- 封面按钮 -->
           <div class="margin_b_4">
             <el-button class="btn" autofocus type="danger" round size="mini"><i class="iconfont icon_margin" style="font-size:16px ">&#xe610;</i>播放全部</el-button>
-            <el-button class="btn" autofocus round size="mini"><i class="iconfont icon_margin" style="font-size:18px ">&#xe64d;</i>已收藏{{}}</el-button>
-            <el-button class="btn" autofocus round size="mini"><i class="iconfont icon_margin" style="font-size:18px ">&#xe601;</i>分享{{}}</el-button>
+            <el-button class="btn" autofocus round size="mini"><i class="iconfont icon_margin" style="font-size:18px ">&#xe64d;</i>收藏({{info.subscribedCount}})</el-button>
+            <el-button class="btn" autofocus round size="mini"><i class="iconfont icon_margin" style="font-size:18px ">&#xe601;</i>分享({{info.shareCount}})</el-button>
             <el-button class="btn" autofocus round size="mini"><i class="iconfont icon_margin" style="font-size:18px ">&#xe61a;</i>下载全部</el-button>
           </div>
           <!-- 标签、详情、简介 -->
           <div class="headerGroup">
-            <div class="margin_b_4">标签：<el-tag v-for="(item, index) in list.tags" color="transparent" type="info" size="small">{{item}}</el-tag></div>
-            <div class="margin_b_4"><span>歌曲:{{list.trackCount}}</span><span>播放:{{list.playCount}}</span></div>
-            <div class="margin_b_4 des" v-show="list.description !== ''">简介:{{list.description}}</div>
+            <div class="margin_b_4">标签：<el-tag v-for="(item, index) in info.tags" color="transparent" type="info" size="small">{{item}}</el-tag></div>
+            <div class="margin_b_4"><span>歌曲:{{info.trackCount}}</span><span>播放:{{info.playCount}}</span></div>
+            <div class="margin_b_4 des" v-show="info.title !== ''">简介: {{info.title}}</div>
           </div>
           
       </div>
@@ -41,14 +41,13 @@
 <script>
 export default {
     props:{
-        list:{
+        info:{
             type:Object,
             required:true,
-            default:{}
         }
     },
     mounted(){
-        console.log(this.list)
+        console.log(this.info)
     }
 }
 </script>

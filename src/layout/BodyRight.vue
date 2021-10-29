@@ -1,17 +1,15 @@
 <template>
     <div id="right">
-      <keep-alive>
-        <el-scrollbar ref="scrollMenuRef" style="height:100%">
-            <div>
-              <div class="homeTab" v-show="!this.$store.state.hideTab">
-                <MenuTab :tabName="tabName" :tabPath="tabPath" :isScroll="isScroll"></MenuTab>
-              </div>
-              <div>
-                <router-view></router-view>
-              </div>
+      <el-scrollbar ref="scrollMenuRef" style="height:100%">
+          <div>
+            <div class="homeTab">
+              <MenuTab :tabName="tabName" :tabPath="tabPath" :isScroll="isScroll"></MenuTab>
             </div>
-          </el-scrollbar>
-      </keep-alive>
+            <div>
+              <router-view></router-view>
+            </div>
+          </div>
+        </el-scrollbar>
     </div>
 </template>
 

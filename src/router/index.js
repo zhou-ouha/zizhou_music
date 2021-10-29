@@ -16,7 +16,7 @@ const routes = [{
         path: '/',
         name: 'SelfdomMusic',
         component: () =>
-            import ("@/views/MusicFound/SelfdomMusic.vue"),
+            import ("@/views/MusicFound/SelfdomMusic/SelfdomMusic.vue"),
     },
     {
         path: '/PersonalIndividual',
@@ -52,23 +52,6 @@ const routes = [{
         path: '/MenuDetail/:id',
         name: 'MenuDetail',
         component: MenuDetail,
-        redirect: 'DetailList/:id',
-        children: [{
-                path: '/DetailList/:id',
-                name: DetailList,
-                component: DetailList
-            },
-            {
-                path: '/DetailCommand',
-                name: DetailCommand,
-                component: DetailCommand
-            },
-            {
-                path: '/DetailCollector',
-                name: DetailCollector,
-                component: DetailCollector
-            },
-        ]
     },
 ]
 

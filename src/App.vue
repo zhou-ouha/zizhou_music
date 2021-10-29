@@ -32,8 +32,8 @@
   </div>
 </template>
 <script>
-import TopHeader from '@/views/TopHeader'
-import BottomFooter from '@/views/BottomFooter'
+import TopHeader from '@/layout/TopHeader'
+import BottomFooter from '@/layout/BottomFooter'
 import BodyLeft from '@/layout/BodyLeft'
 import BodyRight from '@/layout/BodyRight'
 import MusicList from '@/player/MusicList'

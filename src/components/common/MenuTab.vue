@@ -1,10 +1,8 @@
 <template>
-    <div>
-        <div class="homeTab" :class="{bgBlack:isScroll}">
-            <div class="tabBar" ref="tabBar">
-                <div v-for="(name,index) in tabName" :class="{bigSize:index === currentTabIndex}" @click="toggleTab(name,index)">
-                {{name}}<span :class="{tabLine:index === currentTabIndex}"></span>
-                </div>
+    <div class="homeTab" :class="{bgBlack:isScroll}">
+        <div class="tabBar" ref="tabBar">
+            <div v-for="(name,index) in tabName" :class="{bigSize:index === currentTabIndex}" @click="toggleTab(name,index)">
+            {{name}}<span :class="{tabLine:index === currentTabIndex}"></span>
             </div>
         </div>
     </div>
@@ -19,13 +17,13 @@ export default {
         },
         tabPath:{
             type:Array,
-            required:true,
-            default:[]
         },
         isScroll:{
             type:Boolean,
-            required:false,
             default:false
+        },
+        getIndex:{
+
         }
     },
     data(){
@@ -36,7 +34,9 @@ export default {
     methods:{
         toggleTab(name,index){
             this.currentTabIndex = index
-            console.log(this.tabPath[this.currentTabIndex],name)
+            console.log(index)
+            this.getIndex(index)
+            // console.log(this.tabPath[this.currentTabIndex],name)
             // this.$router.push(this.$router.options.routes[index].path)
             this.$router.push(this.tabPath[this.currentTabIndex]);
         }

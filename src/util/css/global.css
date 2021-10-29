@@ -6,6 +6,21 @@ body {
     padding: 0;
 }
 
+
+/* 主页布局共同样式 */
+
+.commonBox {
+    padding: 2vh 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: #fff;
+}
+
+.more {
+    color: #fff;
+}
+
 .el-slider__button {
     width: 6px;
     height: 6px;

@@ -26,17 +26,17 @@
         width="500">
         </el-table-column>
         <el-table-column
-        prop="ar[0].name"
+        prop="artist"
         label="歌手"
         >
         </el-table-column>
         <el-table-column
-        prop="al.name"
+        prop="album"
         label="专辑"
         width="300">
         </el-table-column>
         <el-table-column
-        prop="publishTime"
+        prop="time"
         label="时间">
         </el-table-column>
     </el-table>      
@@ -45,12 +45,19 @@
 
 <script>
 export default {
+    props:{
+      list:{
+        type:Array
+      }
+    },
     data(){
         return {
             tableData:[]
         }
     },
     mounted(){
+      this.tableData = this.list
+      console.log(this.list)
       console.log(this.$route.params.id)
       this.$bus.$on('musicList',this.getHandler);
     },
