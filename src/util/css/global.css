@@ -21,6 +21,15 @@ body {
     color: #fff;
 }
 
+
+/* element元素 */
+
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
+    border-color: rgba(124, 124, 124, 0.829);
+    outline: none;
+}
+
 .el-slider__button {
     width: 6px;
     height: 6px;
