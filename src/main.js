@@ -2,18 +2,30 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 import './assets/icon/iconfont.css'
 import VueParticles from 'vue-particles'
-import less from 'less'
 import './util/css/global.css'
 import http from '@/network/http'
+import { Button, Slider, Carousel, CarouselItem, Input, Row, Col, Tag, Table, TableColumn, Card, Scrollbar } from 'element-ui'
+Vue.use(Button)
+Vue.use(Slider)
+Vue.use(Carousel)
+Vue.use(CarouselItem)
+Vue.use(Input)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Tag)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Card)
+Vue.use(Scrollbar)
+
+
 
 Vue.config.productionTip = false
-Vue.use(ElementUI)
+    // Vue.use(ElementUI)
 Vue.use(VueParticles)
-Vue.use(less)
+    // Vue.use(less)
 
 Vue.prototype.$http = http
 new Vue({
