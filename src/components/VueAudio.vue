@@ -1,14 +1,15 @@
 <template>
   <div id="audioBody">
     <div class="detail">
-      <PlayerImg :src="imgUrl" :musicName="musicName"></PlayerImg>
+      <PlayerImg :src="playList.pic" :musicName="playList.artist"></PlayerImg>
     </div>
     <audio ref="audio"
+            autoplay
             @pause="onPause"
             @play="onPlay"
             @timeupdate="onTimeupdate"
             @loadedmetadata="onLoadedmetadata"
-            :src="this.$store.state.currentMusicUrl"></audio>
+            :src="getSrc"></audio>
     <!-- 音频播放控件 -->
     <div id="controls">
       <!-- 播放，上一首，下一首 -->
@@ -30,9 +31,10 @@
     </div>
     <!-- 音量 -->
     <div>
-      <span class="iconfont" @click="getLyric">&#xe617;</span>
-      <span class="iconfont menuList">&#xe6a7;</span>
-      <span class="iconfont volIcon">&#xe62d;</span>
+      <!-- <span class="iconfont" @click="getLyric">&#xe617;</span> -->
+      <!-- <span class="iconfont menuList">&#xe6a7;</span> -->
+      <span class="iconfont volIcon" @click="toggleVolume" v-show="isVolume">&#xe794;</span>
+      <span class="iconfont volIcon" @click="toggleVolume" v-show="!isVolume">&#xe62d;</span>
       <div class="vol">
         <el-slider vertical 
           v-model="sliderVol" 
@@ -56,8 +58,19 @@ export default {
   components:{
       PlayerImg
   },
+  computed:{
+    getSrc(){
+      return ((this.playList[this.currentIndex] && this.playList[this.currentIndex].sec) || "")
+    }
+  },
   data () {
     return {
+      playList:[],
+      id:null,
+      musicList:[],
+      currentIndex:0,
+      isVolume:false,
+      preVolume:0,
       detail:'',
       // trackIds
       musicMenuIds:[],
@@ -92,6 +105,24 @@ export default {
   },
   mounted(){
     // this.getTotalMenu();
+    this.$bus.$on("playMusic",(playList,index,musicList,id)=>{
+      this.id = id;
+      this.musicList = musicList;
+      this.playList = playList;
+      let transferList = [];
+      console.log(playList)
+      transferList = playList.filter(item => {
+        return item.sec;
+      })
+      transferList = transferList.sort((a,b)=>a.index - b.index);
+      this.playList = transferList;
+      this.setCurrentIndex(index);
+      console.log("配置完成")
+    });
+    this.$bus.$on("PlayMusicListItem",index=>{
+      this.setCurrentIndex(index);
+    })
+    this.play();
   },
   methods: {
       // 上一首
@@ -131,7 +162,21 @@ export default {
       },
       // 音量进度条参数必须是0到1之间的数值
       changeCurrentVol(index) {
-          this.$refs.audio.volume = this.sliderVol / 100
+        //index和this.sliderVol相同
+        this.$refs.audio.volume = this.sliderVol / 100
+      },
+      toggleVolume(){
+        this.isVolume = !this.isVolume
+        if(this.isVolume){//改成静音时，即isVolume由false变成true时
+          // 保存之前的音量
+          this.preVolume = this.sliderVol
+          // 当前音量清0
+          this.$refs.audio.volume = 0.0
+          this.sliderVol = 0
+        }else{//切换成有音量时
+          this.$refs.audio.volume = this.preVolume / 100
+          this.sliderVol = this.preVolume
+        }
       },
       // 控制音频的播放与暂停
       startPlayOrPause () {
@@ -174,6 +219,14 @@ export default {
         console.log(result);
         console.log("maxTime------"+this.audio.maxTime)
       },
+      setCurrentIndex(index){
+        for(let i in this.playList){
+          if(this.playList[i].index == index){
+            this.currentIndex = i;
+            break;
+          }
+        }
+      }
       
   },
   filters: {
@@ -264,7 +317,7 @@ export default {
 }
 .volIcon{
   position: absolute!important;
-  top: 45%;
+  top: 30%;
   left: 101%;
   font-size: 18px;
   cursor: pointer;

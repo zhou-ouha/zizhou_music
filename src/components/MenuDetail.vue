@@ -73,7 +73,7 @@ export default {
             this.length = tracksid.length;
             for(let i = 0,length = this.length;i < length;i ++){
                 this.$http.getMusicDetail(tracksid[i].id).then(res=>{
-                    console.log("send successfully",res.data.songs)
+                    // console.log("send successfully",res.data.songs)
                     let song = new songDetail(res.data.songs);
                     this.musicList.push(song);
                 })

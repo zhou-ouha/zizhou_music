@@ -11,7 +11,7 @@ let instance = axios.create({
     // 请求拦截
 instance.interceptors.request.use(
         config => {
-            console.log('request请求配置', config)
+            // console.log('request请求配置', config)
             return config
         },
         err => {
@@ -20,7 +20,7 @@ instance.interceptors.request.use(
     // 响应拦截
 instance.interceptors.response.use(
         response => {
-            console.log('成功响应：', response)
+            // console.log('成功响应：', response)
             return response
         },
         error => {
@@ -39,11 +39,11 @@ export default { //将请求暴露到全局
     },
     // 使用trackids获取歌曲详情
     getMusicDetail(data) {
-        return instance.get('/song/detail?ids=' + data)
+        return instance('/song/detail?ids=' + data)
     },
     // 获取音乐url
-    getMusicUrl(data) {
-        return instance.get('/song/url?' + data)
+    getMusicUrl(id) {
+        return instance.get('/song/url?id=' + id)
     },
     // 获取banner(走马灯)
     getBanner() {

@@ -3,8 +3,10 @@
     <el-table
         :header-cell-style="{background:'rgba(10, 10, 10, 0.726)'}"
         :row-style="{background:'rgba(10, 10, 10, 0.726)'}"
-        :data="tableData"
+        :data="musicList"
         stripe
+        :row-class-name="tableRowClassName"
+        @row-dblclick="handleDbclick"
         style="width: 96%;margin:0 auto;">
         <el-table-column
         type="index"
@@ -44,27 +46,43 @@
 </template>
 
 <script>
+import { playMusic } from "@/mixin/play/playMusic";
 export default {
     props:{
       list:{
         type:Array
-      }
+      },
+      player: {
+        type: Boolean,
+        default: false,
+      },
     },
     data(){
         return {
-            tableData:[]
+            musicList:[]
         }
     },
+    mixins:[playMusic],
     mounted(){
-      this.tableData = this.list
-      console.log(this.list)
-      console.log(this.$route.params.id)
+      this.musicList = this.list
+      // console.log(this.list)
+      // console.log(this.$route.params.id)
       this.$bus.$on('musicList',this.getHandler);
     },
     methods:{
+      tableRowClassName({row,rowIndex}){
+        row.index = rowIndex;
+      },
+      handleDbclick(row,column,cell){
+        // if(this.player){
+        //   this.$bus.$emit("PlayMusicListItem", row.index);
+        //   return;
+        // }
+        this.playMusic(row.index);
+      },
       async getUrl(data){
         const {data:res} = await this.$http.getMusicDetail(data);
-        this.tableData = res.songs;
+        this.musicList = res.songs;
       },
       getHandler(data){
         let ids = data.map((item) => item.id)

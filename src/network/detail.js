@@ -1,18 +1,7 @@
 import instance from "./http";
 import { formatDate } from "@/util/tool/realFormatSecond";
-export default {
-    // getMusicMenuDetail(id) {
-    //     return instance.get('/playlist/detail', {
-    //         id: id
-    //     })
-    // },
-    // // 获取音乐url
-    // getMusicUrl(arr) {
-    //     return instance.get('/song/url', {
-
-    //     })
-    // },
-
+export default function getMusicUrl(id) {
+    return instance('/song/url?', id)
 }
 /**对歌曲数据进行封装 */
 export class songDetail {
