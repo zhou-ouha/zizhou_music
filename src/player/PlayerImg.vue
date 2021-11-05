@@ -1,9 +1,9 @@
 <template>
   <div class="playerimg">
-      <img src="@/static/imgs/empty.webp" alt="" v-if="!src">
-      <img :src="src" v-else>
-      <div>
-        {{musicName}}
+      <img :src="song.pic || song.picUrl" alt="" v-if="song">
+      <img src="@/static/imgs/empty.webp" alt="" v-else>
+      <div v-if="song">
+        {{song.name}}
       </div>
   </div>
 </template>
@@ -11,15 +11,9 @@
 <script>
 export default {
     props:{
-        src:{
-            type:String,
-            require:true,
-            default:''
-        },
-        musicName:{
-            type:String,
-            require:true,
-            default:''
+        song:{
+          type:Object,
+          default:() => {}
         }
     }
 }

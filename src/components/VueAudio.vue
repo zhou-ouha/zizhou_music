@@ -1,12 +1,14 @@
 <template>
   <div id="audioBody">
     <div class="detail">
-      <PlayerImg :src="playList.pic" :musicName="playList.artist"></PlayerImg>
+      <!-- 向封面组件传递整体数据，歌曲切换与封面切换准确性更高 -->
+    <PlayerImg :song="playList[currentIndex]"></PlayerImg>
     </div>
     <audio ref="audio"
             autoplay
             @pause="onPause"
             @play="onPlay"
+            @ended="musicEnded"
             @timeupdate="onTimeupdate"
             @loadedmetadata="onLoadedmetadata"
             :src="getSrc"></audio>
@@ -30,22 +32,26 @@
       </div>
     </div>
     <!-- 音量 -->
-    <div>
-      <!-- <span class="iconfont" @click="getLyric">&#xe617;</span> -->
-      <!-- <span class="iconfont menuList">&#xe6a7;</span> -->
-      <span class="iconfont volIcon" @click="toggleVolume" v-show="isVolume">&#xe794;</span>
-      <span class="iconfont volIcon" @click="toggleVolume" v-show="!isVolume">&#xe62d;</span>
+    <div class="volume">
+      <div class="volIcon">
+        <span class="iconfont" @click="toggleVolume" v-show="isVolume">&#xe794;</span>
+        <span class="iconfont" @click="toggleVolume" v-show="!isVolume">&#xe62d;</span>
+      </div>
       <div class="vol">
-        <el-slider vertical 
+        <el-slider
           v-model="sliderVol" 
           :show-tooltip="false" 
           @change="changeCurrentVol" 
           class="volSlider" ></el-slider>
       </div>
     </div>
-    <!-- 音乐列表 -->
-    <div>
-      
+    <!-- 工具 -->
+    <div class="playerTool">
+      <div class="playerSchema" @click="toggleSchema">
+        <a href="#" title="列表循环" v-show="schemaIndex === 0"><i class="iconfont">&#xe66c;</i></a>
+        <a href="#" title="随机播放" v-show="schemaIndex === 1"><i class="iconfont">&#xe611;</i></a>
+        <a href="#" title="单曲循环" v-show="schemaIndex === 2"><i class="iconfont">&#xe66d;</i></a>
+      </div>
     </div>
   </div>
 </template>
@@ -71,28 +77,9 @@ export default {
       currentIndex:0,
       isVolume:false,
       preVolume:0,
-      detail:'',
-      // trackIds
-      musicMenuIds:[],
-      musicMenu:[],
-      // music urls in the menu
-      musicUrls:[],
-      // current music index
-      musicIndex:0,
-      // current music index
-      musicUrl:'',
-      // img urls
-      imgUrls:[],
-      // current img url
-      imgUrl:'',
-      // music names
-      names:[],
-      // current music name
-      musicName:'',
-      // toggle the menuList
-      menuShow:false,
+      schemaIndex:0,
       sliderTime:0,
-      sliderVol:50,
+      sliderVol:100,
       audio: {
           // 该字段是音频是否处于播放状态的属性
           playing: false,
@@ -122,39 +109,21 @@ export default {
     this.$bus.$on("PlayMusicListItem",index=>{
       this.setCurrentIndex(index);
     })
-    this.play();
+    // this.play();
   },
   methods: {
+      /**上下切换音乐 */
       // 上一首
       forwardMusic(){
-        this.audio.playing = false
-        if(this.$store.state.currentIndex > 0){
-          // this.musicIndex --
-          this.$store.commit('changeCurrentIndex','-');
-        }else{
-          // console.log("我是0号位置")
-          this.musicIndex = this.musicUrls.length - 1;
-          // console.log(this.musicUrls.length,this.$store.state.currentIndex)
-        }
-        this.imgUrl = this.imgUrls[this.$store.state.currentIndex];
-        this.musicName = this.names[this.$store.state.currentIndex]
-        // .slice(0,this.names[this.$store.state.currentIndex].indexOf("("))
-        this.$refs.audio.src =  this.$store.state.urls[this.$store.state.currentIndex].url;
-        this.$refs.audio.autoplay = true;
+        if(this.currentIndex <= 0) this.currentIndex = this.playList.length - 1;
+        else this.currentIndex --;
+        this.$refs.audio.src = this.playList[this.currentIndex].src;
       },
       // 下一首
       nextMusic(){
-        console.log(this.musicMenu)
-        this.audio.playing = false
-        // this.musicIndex ++
-        this.$store.commit('changeCurrentIndex','+');
-        console.log(this.$store.state.currentIndex)
-        this.imgUrl = this.imgUrls[this.$store.state.currentIndex]
-        // .slice(0,this.names[this.$store.state.currentIndex].indexOf("("))
-        this.musicName = this.names[this.$store.state.currentIndex]
-        this.$refs.audio.src =  this.$store.state.urls[this.$store.state.currentIndex].url
-        console.log(this.$store.state.urls)
-        this.$refs.audio.autoplay = true
+        if(this.currentIndex >= this.playList.length - 1) this.currentIndex = 0;
+        else this.currentIndex ++;
+        this.$refs.audio.src = this.playList[this.currentIndex].src;
       },
       // 拖动进度条，改变当前时间，index是进度条改变时的回调函数的参数0-100之间，需要换算成实际时间
       changeCurrentTime(index) {
@@ -165,6 +134,7 @@ export default {
         //index和this.sliderVol相同
         this.$refs.audio.volume = this.sliderVol / 100
       },
+      /**切换音乐禁音与解除静音 */
       toggleVolume(){
         this.isVolume = !this.isVolume
         if(this.isVolume){//改成静音时，即isVolume由false变成true时
@@ -178,6 +148,11 @@ export default {
           this.sliderVol = this.preVolume
         }
       },
+      toggleSchema(){
+        if(this.schemaIndex >= 2) this.schemaIndex = 0;
+        else this.schemaIndex ++;
+      },
+      /**音乐的播放暂停 */
       // 控制音频的播放与暂停
       startPlayOrPause () {
           return this.audio.playing ? this.pause() : this.play()
@@ -211,6 +186,28 @@ export default {
           console.log(res)
           this.audio.maxTime = parseInt(res.target.duration)
       },
+      /**监听音乐播放结束后的操作 */
+      // 判断播放结束后是哪种播放模式
+      musicEnded(){
+        console.log("ended:",this.schemaIndex)
+        switch(this.schemaIndex){
+          case 0:
+            this.currentIndex >= this.playList.length - 1
+            ? 0
+            : this.currentIndex ++;
+            break;
+          case 1:
+            this.currentIndex = Math.floor(Math.random ()* this.playList.length);
+            console.log(this.currentIndex)
+            break;
+          case 2:
+            // 直接设置当前index不变，会因为computed缓存，导致不播放
+            this.currentIndex = this.currentIndex;
+            this.changeCurrentTime(0);
+            this.play();
+            break;
+        }
+      },
       async getLyric(){
         const {data:res} = await this.$http.getLyric(this.$store.state.ids[this.$store.state.currentIndex].id);
         console.log(res.lrc.lyric);
@@ -219,6 +216,7 @@ export default {
         console.log(result);
         console.log("maxTime------"+this.audio.maxTime)
       },
+      /**设置当前要播放的音乐 */
       setCurrentIndex(index){
         for(let i in this.playList){
           if(this.playList[i].index == index){
@@ -248,7 +246,7 @@ export default {
   margin: 0 auto;
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   
 }
@@ -301,48 +299,27 @@ export default {
   left: -60px;
 }
 .slider{
-  width: 32vw;
+  width: 50vw;
   display: inline-block;
   margin-left: 2vw;
 }
+.volume{
+  width: 150px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 .vol{
-  position: absolute!important;
-  top: -90%;
-  left: 100%;
-  display: none;
-  border: 1px solid #333;
-  background-color: #333;
-  border-radius: 10px;
-  padding: 1vh 0;
+  flex: 1;
+  padding-left: 15px;
 }
-.volIcon{
-  position: absolute!important;
-  top: 30%;
-  left: 101%;
-  font-size: 18px;
-  cursor: pointer;
+
+.playerTool{
+  width: 200px;
+  height: 16px;
 }
-.volIcon:hover+.vol{
-  display: block;
+.playerTool .playerSchema{
+  height: 16px;
 }
-.vol:hover{
-  display: block;
-}
-.volSlider{
-  height: 10vh;
-}
-.menuList{
-  position: absolute;
-  top: 45%;
-  left: 105%;
-}
-.menuList:hover{
-  cursor: pointer;
-  font-size: 16px;
-}
-/* .el-card{
-  position: absolute;
-  top: -65%;
-  right: -12.5%;
-} */
 </style>

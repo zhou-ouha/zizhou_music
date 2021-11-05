@@ -6,6 +6,11 @@ body {
     padding: 0;
 }
 
+a {
+    color: #111;
+    text-decoration: none;
+}
+
 
 /* 主页布局共同样式 */
 
