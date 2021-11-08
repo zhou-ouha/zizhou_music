@@ -2,22 +2,22 @@
     <div>
         <DetailHeader :info="baseInfo"/>
         <MenuTab :tabName="tabName" :getIndex="getIndex"/>
-        <div>
-            <DetailList 
-              v-show="isShow === 'music'"
-              :list="musicList"
-            />
-            <!-- 评论 -->
-            <!-- 收藏 -->
-        </div>
+        
+        <detail-list 
+          v-show="isShow === 'music'"
+          :list="musicList"
+        />
+        <!-- 评论 -->
+        <!-- 收藏 -->
     </div>
 </template>    
 <script>
 import MenuTab from '@/components/common/MenuTab'
 import DetailHeader from '@/components/content/Detail/DetailHeader'
-import DetailList from '@/components/content/Detail/DetailList'
 import {baseInfo,songDetail} from "@/network/detail"
+import DetailList from '../Detail/DetailList.vue'
 export default {
+    name:"MenuDetail",
     components:{
         DetailHeader, 
         MenuTab,
@@ -86,5 +86,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
+
 </style>

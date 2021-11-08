@@ -49,7 +49,7 @@ export default {
       }else{
         this.isScroll = false;
       }
-      console.log("isScroll----"+this.isScroll);
+      // console.log("isScroll----"+this.isScroll);
     }
   }
 }

@@ -5,7 +5,6 @@ export default function throttle(fn, delay) {
         if (!timer) {
             timer = setTimeout(() => {
                 fn.apply(context, arguments);
-                console.log(arguments)
                 timer = null;
             }, delay);
         }

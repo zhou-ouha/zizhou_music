@@ -26,7 +26,6 @@
         <BodyLeft></BodyLeft>
         <BodyRight></BodyRight>
       </div>
-      <MusicList></MusicList>   
       <BottomFooter></BottomFooter>
     </div>
   </div>
@@ -36,14 +35,12 @@ import TopHeader from '@/layout/TopHeader'
 import BottomFooter from '@/layout/BottomFooter'
 import BodyLeft from '@/layout/BodyLeft'
 import BodyRight from '@/layout/BodyRight'
-import MusicList from '@/player/MusicList'
 export default {
   components:{
     TopHeader,
     BottomFooter,
     BodyLeft,
-    BodyRight,
-    MusicList}
+    BodyRight}
 }
 </script>
 

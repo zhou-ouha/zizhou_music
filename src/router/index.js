@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MenuDetail from '@/components/MenuDetail'
+import MenuDetail from '../components/content/Menu/MenuDetail.vue'
 import DetailList from '@/components/content/Detail/DetailList'
 import DetailCommand from '@/components/content/Detail/DetailCommand'
 import DetailCollector from '@/components/content/Detail/DetailCollector'

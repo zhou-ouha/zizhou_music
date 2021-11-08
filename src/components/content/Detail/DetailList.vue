@@ -9,9 +9,18 @@
         @row-dblclick="handleDbclick"
         style="width: 96%;margin:0 auto;">
         <el-table-column
-        type="index"
         label=""
         width="50">
+          <template slot-scope="scope">
+            <span 
+              class="iconfont" 
+              style="color:#fe3c32;"
+              v-show="scope.$index === currentIndex"
+            >&#xe62d;</span>
+            <span 
+              v-show="scope.$index !== currentIndex"
+            >{{scope.$index + 1}}</span>
+          </template>
         </el-table-column>
         <el-table-column
         label="操作"
@@ -46,8 +55,9 @@
 </template>
 
 <script>
-import { playMusic } from "@/mixin/play/playMusic";
+import { playMusic } from "../../../mixin/play/playMusic";
 export default {
+    name:"DetailList",
     props:{
       list:{
         type:Array
@@ -57,16 +67,16 @@ export default {
         default: false,
       },
     },
+    mixins:[playMusic],
     data(){
         return {
-            musicList:[]
+            musicList:[],
+            currentIndex:null,
         }
     },
-    mixins:[playMusic],
     mounted(){
       this.musicList = this.list
-      // console.log(this.list)
-      // console.log(this.$route.params.id)
+      console.log(this.list)
       this.$bus.$on('musicList',this.getHandler);
     },
     methods:{
@@ -78,6 +88,7 @@ export default {
         //   this.$bus.$emit("PlayMusicListItem", row.index);
         //   return;
         // }
+        this.currentIndex = row.index;
         this.playMusic(row.index);
       },
       async getUrl(data){

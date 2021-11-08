@@ -52,17 +52,39 @@
         <a href="#" title="随机播放" v-show="schemaIndex === 1"><i class="iconfont">&#xe611;</i></a>
         <a href="#" title="单曲循环" v-show="schemaIndex === 2"><i class="iconfont">&#xe66d;</i></a>
       </div>
+      <div class="lyric" @click="toggleLyric">
+        <a href="#" title="歌词"><i class="iconfont">&#xe603;</i></a>
+      </div>
+      <div class="list" @click="toggleList">
+        <a href="#" title="播放列表"><i class="iconfont">&#xe6a7;</i></a>
+      </div>
     </div>
+    <!-- 列表 -->
+    <CurrentList 
+      :musicList="list"
+      :showList="showList"
+      :currentIndex="currentIndex"
+    />
+    <!-- 歌词 -->
+    <lyric
+      :lyric="lyric"
+      :currentTime="audio.currentTime"
+      v-show="showLyric"
+    />
   </div>
 </template>
 
 <script>
-// import http from '@/network/http'
+import http from '@/network/http'
 import realFormatSecond from '@/util/tool/realFormatSecond.js'
 import PlayerImg from '@/player/PlayerImg'
+import CurrentList from '@/player/CurrentList'
+import Lyric from './Lyric.vue'
 export default {
   components:{
-      PlayerImg
+      PlayerImg,
+      CurrentList,
+      Lyric
   },
   computed:{
     getSrc(){
@@ -88,6 +110,10 @@ export default {
           // 音频最大播放时长
           maxTime: 0
       },
+      showList:false,
+      list:[],
+      lyric:null,//歌词
+      showLyric:false,
     }
   },
   mounted(){
@@ -95,6 +121,7 @@ export default {
     this.$bus.$on("playMusic",(playList,index,musicList,id)=>{
       this.id = id;
       this.musicList = musicList;
+      this.list = musicList;
       this.playList = playList;
       let transferList = [];
       console.log(playList)
@@ -167,7 +194,11 @@ export default {
       },
       // 当音频播放
       onPlay () {
-          this.audio.playing = true
+          this.audio.playing = true;
+          this.$http.getLyric(this.playList[this.currentIndex].id).then((res)=>{
+            this.lyric = (res.data.lrc && res.data.lrc.lyric) || '暂无歌词';
+            // console.log(this.lyric);
+          })
       },
       // 当音频暂停
       onPause () {
@@ -208,13 +239,8 @@ export default {
             break;
         }
       },
-      async getLyric(){
-        const {data:res} = await this.$http.getLyric(this.$store.state.ids[this.$store.state.currentIndex].id);
-        console.log(res.lrc.lyric);
-        let regx = /\[.........\]/g;
-        let result = res.lrc.lyric.match(regx);
-        console.log(result);
-        console.log("maxTime------"+this.audio.maxTime)
+      toggleLyric(){
+        this.showLyric = !this.showLyric;
       },
       /**设置当前要播放的音乐 */
       setCurrentIndex(index){
@@ -224,6 +250,12 @@ export default {
             break;
           }
         }
+      },
+      toggleList(){
+        this.$bus.$emit("showList",{
+          showList:true,
+          playList:this.playList
+        });
       }
       
   },
@@ -318,8 +350,21 @@ export default {
 .playerTool{
   width: 200px;
   height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 0 10px;
 }
 .playerTool .playerSchema{
+  width: calc(33%);
+  height: 16px;
+}
+.playerTool .lyric{
+  width: calc(33%);
+  height: 16px;
+}
+.playerTool .list{
+  width: calc(33%);
   height: 16px;
 }
 </style>
