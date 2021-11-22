@@ -68,6 +68,10 @@ export default { //将请求暴露到全局
     // 获取歌词
     getLyric(id) {
         return instance.get('/lyric?id=' + id)
+    },
+    // 搜索
+    search(keywords) {
+        return instance.get('/search/suggest?keywords= ' + keywords)
     }
 
 }

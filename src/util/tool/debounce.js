@@ -1,4 +1,4 @@
-export default function debounce(fn, waitTime, immediate) {
+export default function debounce(fn, waitTime, immediate = false) {
     let timer = null;
     console.log("我是防抖函数")
     return function(...args) {
