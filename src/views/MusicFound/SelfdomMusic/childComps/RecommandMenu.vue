@@ -8,7 +8,21 @@
                   :key="index"
                   @click="getDetail(index)"
                 >
+                <!-- 歌单封面 -->
                 <img :src="item.picUrl" alt="">
+                <!-- 播放数量 -->
+                <div class="playCount">
+                    
+                    <div>
+                        <i class="el-icon-headset" style="margin-right:4px;"></i>{{
+                            item.playCount >= 10000
+                            ? (item.playCount / 10000).toFixed(0) + "万"
+                            : item.playCount
+                        }}
+                    </div>
+                    
+                </div>
+                <!-- 歌单描述 -->
                 <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
                 </div>
             </div>
@@ -61,6 +75,7 @@ export default {
     height: auto;
     margin: 1.5vh .5vw;
     text-align: center;
+    position: relative;
 }
 .imgCard div:hover{
     cursor: pointer;
@@ -69,6 +84,29 @@ export default {
     width: 100%;
     height: auto;
     border-radius: 4px;
+}
+.imgCard img+.playCount{
+    display: none;
+}
+.imgCard img:hover+.playCount{
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: -3vh;
+    left: -1vw;
+    transition: all 1.2s;
+}
+/* .imgCard .playCount{
+    width: 100%;
+    position: absolute;
+    top: -3vh;
+    left: -1vw;
+} */
+.playCount div{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.287);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 .menuName{
     display: inline-block;

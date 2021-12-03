@@ -2,9 +2,9 @@
     <div id="right">
       <el-scrollbar ref="scrollMenuRef" style="height:100%">
           <div>
-            <div class="homeTab">
+            <!-- <div class="homeTab">
               <MenuTab :tabName="tabName" :tabPath="tabPath" :isScroll="isScroll"></MenuTab>
-            </div>
+            </div> -->
             <div>
               <router-view></router-view>
             </div>

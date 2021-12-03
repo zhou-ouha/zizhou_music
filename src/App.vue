@@ -18,14 +18,16 @@
       clickMode="push"
       class="lizi"
     ></vue-particles>
-    <!-- <router-view/> -->
     <div class="home">
+      <!-- 头部 -->
       <TopHeader></TopHeader>
       <div id="main">
         <!-- 左侧菜单 -->
         <BodyLeft></BodyLeft>
+        <!-- 右侧主体部分 -->
         <BodyRight></BodyRight>
       </div>
+      <!-- 底部播放器 -->
       <BottomFooter></BottomFooter>
     </div>
   </div>

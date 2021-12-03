@@ -34,18 +34,14 @@ export default {
     methods:{
         toggleTab(name,index){
             this.currentTabIndex = index
-            console.log(index)
-            this.getIndex(index)
-            // console.log(this.tabPath[this.currentTabIndex],name)
-            // this.$router.push(this.$router.options.routes[index].path)
-            this.$router.push(this.tabPath[this.currentTabIndex]);
+            this.$emit("getIndex",index);
         }
     }
 }
 </script>
 <style scoped>
 .homeTab{
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   z-index: 9;
   color: #fff;

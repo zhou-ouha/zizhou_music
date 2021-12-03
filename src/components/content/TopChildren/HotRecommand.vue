@@ -1,32 +1,32 @@
 <template>
   <div>
     <div class="card" v-show="isSearch">
-      <el-card>
+      <div class="box">
         <div class="item" v-show="songs">
-          <span>单曲</span>
+          <span>单曲 :</span>
           <div v-for="(item,index1) in songs" :key="index1+'songs'">
             {{ item.name }}——{{ item.artists[0].name }}
           </div>
         </div>
         <div class="item" v-show="albums">
-          <span>专辑</span>
+          <span>专辑 :</span>
           <div v-for="(item,index2) in albums" :key="index2+'albums'">
             {{ item.name }}——{{ item.artist.name }}
           </div>
         </div>
         <div class="item" v-show="playlists">
-          <span>歌单</span>
+          <span>歌单 :</span>
           <div v-for="(item,index3) in playlists" :key="index3+'playlists'">
             {{ item.name }}
           </div>
         </div>
         <div class="item" v-show="artists">
-          <span>歌手</span>
+          <span>歌手 :</span>
           <div v-for="(item,index4) in artists" :key="index4+'artists'">
             {{ item.name }}
           </div>
         </div>
-      </el-card>
+      </div>
     </div>
   </div>
 </template>
@@ -81,25 +81,30 @@ export default {
   overflow: hidden;
 }
 .card{
-  /* background-color: antiquewhite; */
   position: absolute;
   z-index: 999;
   top: 6.2vh;
   left: 0;
   width: 200%;
-  /* height: 50vh; */
+}
+.box{
+  border: 1px solid rgb(128, 128, 128);
+  border-radius: 10px;
+  background-color: rgb(128, 128, 128);
 }
 .item{
-  /* background-color: blue; */
+  font-weight: bolder;
   text-align: start;
   line-height: 4vh;
-  color: rgb(0, 204, 255);
+  color: #fff;
+  margin: 4px 0;
 }
 .item span{
-  background-color: rgb(251, 255, 0);
   border-radius: 35%;
-  color: rgb(3, 3, 3);
+  color: #fff;
+  margin-left: 8px;
   font-size: 17px;
+  font-weight: normal;
 }
 .item div{
   margin-left: 3vw;

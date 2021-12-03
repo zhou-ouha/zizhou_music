@@ -72,6 +72,10 @@ export default { //将请求暴露到全局
     // 搜索
     search(keywords) {
         return instance.get('/search/suggest?keywords= ' + keywords)
+    },
+    // 获取评论
+    getComments(id) {
+        return instance.get("/comment/playlist?" + id)
     }
 
 }

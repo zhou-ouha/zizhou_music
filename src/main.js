@@ -20,6 +20,7 @@ Vue.use(TableColumn)
 Vue.use(Card)
 Vue.use(Scrollbar)
 Vue.use(Drawer)
+    // Vue.use(Textarea)
 
 
 

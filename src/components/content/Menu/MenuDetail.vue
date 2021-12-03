@@ -1,13 +1,18 @@
 <template>
     <div>
         <DetailHeader :info="baseInfo"/>
-        <MenuTab :tabName="tabName" :getIndex="getIndex"/>
+        <MenuTab :tabName="tabName" @getIndex="toggleTab" />
         
         <detail-list 
-          v-show="isShow === 'music'"
+          v-show="currentIndex === 0"
           :list="musicList"
         />
         <!-- 评论 -->
+        <comment 
+          v-show="currentIndex === 1"
+          :hot="hot"
+          :comments="comments"
+        />
         <!-- 收藏 -->
     </div>
 </template>    
@@ -16,42 +21,34 @@ import MenuTab from '@/components/common/MenuTab'
 import DetailHeader from '@/components/content/Detail/DetailHeader'
 import {baseInfo,songDetail} from "@/network/detail"
 import DetailList from '../Detail/DetailList.vue'
+import Comment from '../Detail/Comment.vue'
 export default {
     name:"MenuDetail",
     components:{
         DetailHeader, 
         MenuTab,
-        DetailList
+        DetailList,
+        Comment
     },
     data(){
         return {
-            tabName:["歌曲列表","评论","收藏者"],
+            tabName:["歌曲列表","评论"],
             id:null,
             limit:30,
             list:[],
             baseInfo:{},
             musicList:[],
             length:null,
-            isShow:"music",
+            currentIndex:0,
+            hot:[],
+            comments:[]
         }
     },
     created(){
         this.getMenuDetail();
+        this.getComments();
     },
     methods:{
-        getIndex(index){
-            switch(index){
-                case 0:
-                    this.isShow = "music";
-                    break;
-                case 0:
-                    this.isShow = "recommand";
-                break;
-                case 0:
-                    this.isShow = "sub";
-                break;
-            }
-        },
         init(){
             this.limit = 20;
             this.list = [];
@@ -83,6 +80,20 @@ export default {
             console.log(this.baseInfo)
         },
         // 获取歌单评论
+        async getComments(){
+            this.id = this.$route.params.id;
+            const {data:res} = await this.$http.getComments(this.id);
+            this.hot = res.hotComments;
+            this.comments = res.comments
+            this.$bus.$emit("send-data",{
+                hot:this.hot,
+                comments:this.comments
+            });
+            console.log(res);
+        },
+        toggleTab(index){
+            this.currentIndex = index;
+        }
     }
 }
 </script>

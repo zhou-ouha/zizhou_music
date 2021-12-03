@@ -188,3 +188,7 @@ tr>th {
 .el-scrollbar__wrap {
     overflow-y: scroll;
 }
+
+.el-textarea__inner {
+    background-color: transparent;
+}

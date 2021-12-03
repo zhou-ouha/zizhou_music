@@ -17,8 +17,12 @@
           </div>
           <!-- 歌单作者 -->
           <div class="margin_b_4 author">
-            <span>创建者：{{info.creatorName}}</span>
-            <span></span>
+            <span class="avatar">
+                <img :src="info.creatorAvatar" alt="">
+            </span>
+            
+            <a>{{info.creatorName}}-{{createTime}}</a>
+            <!-- <i>{{d}}</i> -->
           </div>
           <!-- 封面按钮 -->
           <div class="margin_b_4">
@@ -39,6 +43,7 @@
 </template>
 
 <script>
+import formatTime from "@/util/tool/formatTime.js"
 export default {
     props:{
         info:{
@@ -46,8 +51,13 @@ export default {
             required:true,
         }
     },
-    mounted(){
+    created(){
         console.log(this.info)
+    },
+    computed:{
+        createTime(){
+            return formatTime(this.info.createTime)
+        }
     }
 }
 </script>
@@ -58,6 +68,7 @@ export default {
     justify-content: left;
     align-items: flex-start;
     color: #fff;
+    margin: 2vh 2vw;
 }
 .left{
     margin-right: 20px;
@@ -76,6 +87,8 @@ export default {
 }
 .author{
     font-size: 14px;
+    display: flex;
+    
 }
 .el-tag{
     margin: 0.5%;
@@ -95,5 +108,15 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.avatar img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 1vw;
+}
+.avatar+a{
+    color: #fff;
+    margin-top: 1vh;
 }
 </style>

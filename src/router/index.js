@@ -19,36 +19,6 @@ const routes = [{
             import ("@/views/MusicFound/SelfdomMusic/SelfdomMusic.vue"),
     },
     {
-        path: '/PersonalIndividual',
-        name: 'PersonalIndividual',
-        component: () =>
-            import ("@/views/MusicFound/PersonalIndividual.vue"),
-    },
-    {
-        path: '/MusicMenu',
-        name: 'MusicMenu',
-        component: () =>
-            import ("@/views/MusicFound/MusicMenu.vue"),
-    },
-    {
-        path: '/LeaderBoard',
-        name: 'LeaderBoard',
-        component: () =>
-            import ("@/views/MusicFound/LeaderBoard.vue"),
-    },
-    {
-        path: '/Vocalist',
-        name: 'Vocalist',
-        component: () =>
-            import ("@/views/MusicFound/Vocalist.vue"),
-    },
-    {
-        path: '/LatestMusic',
-        name: 'LatestMusic',
-        component: () =>
-            import ("@/views/MusicFound/LatestMusic.vue"),
-    },
-    {
         path: '/MenuDetail/:id',
         name: 'MenuDetail',
         component: MenuDetail,

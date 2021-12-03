@@ -42,11 +42,15 @@ export default {
     },
     data(){
         return {
-            url:'https://img0.baidu.com/it/u=103721101,4076571305&fm=26&fmt=auto&gp=0.jpg',
+            // 推荐歌单
             recommandUrl:[],
+            // 轮播图数据
             bannerUrl:[],
+            // 独家放送
             onlyUrl:[],
+            // 最新音乐
             newSong:[],
+            // 推荐mv
             recommandMV:[],
         }
     },    
@@ -54,11 +58,10 @@ export default {
         this.$http.getBanner().then(res=>{
             this.bannerUrl = res.data.banners
         },err=>{
-
+            
         })
         this.$http.getRecommandMenu().then(res=>{
             this.recommandUrl = res.data.result
-            console.log("------",res)//这里有封面相关信息，无需获取歌单详情
         },err=>{
 
         })
