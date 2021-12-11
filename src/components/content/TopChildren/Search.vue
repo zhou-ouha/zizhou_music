@@ -9,19 +9,20 @@
         v-model="keywords"
         size="mini"
         class="mr-left"
+        @keyup.enter.native="search"
       >
       </el-input>
-      <HotRecommand :isSearch="isSearch" :keywords="keywords"></HotRecommand>
+      <SearchRecommand :isSearch="isSearch" :keywords="keywords"></SearchRecommand>
     </div>
     
   </div>
 </template>
 
 <script>
-import HotRecommand from '@/components/content/TopChildren/HotRecommand'
+import SearchRecommand from '@/components/content/TopChildren/SearchRecommand'
 export default {
   components:{
-    HotRecommand
+    SearchRecommand
   },
   data(){
     return {
@@ -30,6 +31,20 @@ export default {
     }
   },
   methods:{
+    search(){
+      if(this.keywords.trim() == "") return;
+      this.isSearch = false;
+      let _this = this;
+      this.$nextTick(this.notice(_this))
+      this.$router.push("/musicHome/SearchPage");
+    },
+    notice(that){
+      setTimeout(() => {
+        console.log("-----")
+        that.$bus.$emit("searchyixia",that.keywords)
+      }, 200);
+      
+    },
     back(){
       console.log("back")
       this.$router.back();

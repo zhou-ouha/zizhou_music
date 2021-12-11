@@ -4,47 +4,14 @@
           <el-row :gutter="0">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content">发现音乐</div></el-col>
           </el-row>
-          <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content">播客</div></el-col>
-          </el-row>
           <el-row :gutter="0">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content">视频</div></el-col>
           </el-row>
           <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content">朋友</div></el-col>
-          </el-row>
-          <el-row :gutter="0">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content">直播</div></el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content">私人FM</div></el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="myMusic">我的音乐</div></el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content"><i class="iconfont icon">&#xe603;</i>本地音乐</div></el-col>
-          </el-row>
-          <el-row :gutter="0">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content"><i class="iconfont icon">&#xe730;</i>下载管理</div></el-col>
-          </el-row>
-          <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content"><i class="iconfont icon">&#xe6d7;</i>最近播放</div></el-col>
-          </el-row>
-          <el-row :gutter="0">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content"><i class="iconfont icon">&#xe61a;</i>我的音乐云盘</div></el-col>
           </el-row>
           <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content"><i class="iconfont icon">&#xe612;</i>我的收藏</div></el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="myMusic myMenu" @click="toggleMyMenu">创建的歌单<i class="iconfont menuIcon"></i></div>
-            <div class="grid-content mydetailMnu" v-show="myMenu">
-              <span>歌单一</span> 
-              <span>歌单二</span> 
-              <span>歌单三</span> 
-            </div>
-            </el-col>
           </el-row>
           <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="myMusic getMenu" @click="toggleGetMenu">收藏的歌单<i class="iconfont menuIcon"></i></div>

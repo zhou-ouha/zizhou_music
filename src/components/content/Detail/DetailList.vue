@@ -1,9 +1,10 @@
 <template>
   <div>
+    <!-- <div>name:{{list[0]}}</div> -->
     <el-table
         :header-cell-style="{background:'rgba(10, 10, 10, 0.726)'}"
         :row-style="{background:'rgba(10, 10, 10, 0.726)'}"
-        :data="musicList"
+        :data="list"
         stripe
         :row-class-name="tableRowClassName"
         @row-dblclick="handleDbclick"
@@ -60,7 +61,8 @@ export default {
     name:"DetailList",
     props:{
       list:{
-        type:Array
+        type:Array,
+        default:[]
       },
       player: {
         type: Boolean,

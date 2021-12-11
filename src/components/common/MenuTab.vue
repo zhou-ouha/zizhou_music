@@ -15,9 +15,6 @@ export default {
             required:true,
             default:[]
         },
-        tabPath:{
-            type:Array,
-        },
         isScroll:{
             type:Boolean,
             default:false

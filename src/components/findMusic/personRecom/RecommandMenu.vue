@@ -6,7 +6,7 @@
                 <div 
                   v-for="(item,index) in recommandUrl" 
                   :key="index"
-                  @click="getDetail(index)"
+                  @click="getDetail(item.id)"
                 >
                 <!-- 歌单封面 -->
                 <img :src="item.picUrl" alt="">
@@ -46,8 +46,8 @@ export default {
         }
     },
     methods:{
-        getDetail(index){
-            this.$router.push('/MenuDetail/id='+this.recommandUrl[index].id)
+        getDetail(id){
+            this.$router.push('/musicHome/MenuDetail/id='+id)
         }
     }
 }

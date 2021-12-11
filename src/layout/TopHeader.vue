@@ -4,7 +4,6 @@
         <div class="main">
             <Search></Search>
             <PartRight></PartRight>
-            
         </div>
     </div>
 </template>

@@ -14,6 +14,7 @@
       <!-- 点赞 -->
       <div class="good">
         <i class="iconfont">&#xe606;</i>
+        <i style="font-size:12px;">{{item.likedCount}}</i>
       </div>
       
     </div>

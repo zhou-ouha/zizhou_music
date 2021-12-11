@@ -27,11 +27,11 @@
     </div>
 </template>
 <script>
-import swiper from '@/views/MusicFound/SelfdomMusic/childComps/swiper'
-import privateLive from '@/views/MusicFound/SelfdomMusic/childComps/privateLive'
-import newSongs from '@/views/MusicFound/SelfdomMusic/childComps/newSongs'
-import recommandMV from '@/views/MusicFound/SelfdomMusic/childComps/recommandMV'
-import RecommandMenu from '@/views/MusicFound/SelfdomMusic/childComps/RecommandMenu'
+import swiper from '@/components/findMusic/personRecom/swiper'
+import privateLive from '@/components/findMusic/personRecom/privateLive'
+import newSongs from '@/components/findMusic/personRecom/newSongs'
+import recommandMV from '@/components/findMusic/personRecom/recommandMV'
+import RecommandMenu from '@/components/findMusic/personRecom/RecommandMenu'
 export default {
     components:{
         RecommandMenu,

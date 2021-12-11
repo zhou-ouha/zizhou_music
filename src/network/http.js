@@ -76,6 +76,10 @@ export default { //将请求暴露到全局
     // 获取评论
     getComments(id) {
         return instance.get("/comment/playlist?" + id)
-    }
+    },
+    // 搜索
+    getSearch(options) {
+        return instance.get("/cloudsearch", options)
+    },
 
 }
