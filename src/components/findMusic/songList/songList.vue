@@ -1,15 +1,14 @@
 <template>
     <div>
-        <div class="more">推荐歌单<i class="iconfont" style="font-size:12px ">&#xe633;</i></div>
         <div>
             <div class="imgCard commonBox">
                 <div 
-                  v-for="(item,index) in recommandUrl" 
+                  v-for="(item,index) in playList" 
                   :key="index"
                   @click="getDetail(item.id)"
                 >
                 <!-- 歌单封面 -->
-                <img :src="item.picUrl" alt="">
+                <img :src="item.coverImgUrl" alt="">
                 <!-- 播放数量 -->
                 <div class="playCount">
                     
@@ -34,7 +33,7 @@
 <script>
 export default {
     props:{
-        recommandUrl:{
+        playList:{
             type:Array,
             required:true,
             default:[]
@@ -88,7 +87,7 @@ export default {
 .imgCard img+.playCount{
     display: none;
 }
-.imgCard div:hover .playCount{
+.imgCard img:hover+.playCount{
     display: block;
     width: 100%;
     position: absolute;

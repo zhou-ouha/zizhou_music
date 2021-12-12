@@ -18,6 +18,9 @@ export default {
     MenuTab
   },
   mounted(){
+    this.$bus.$on("scroll",()=>{
+      this.$refs.scrollMenuRef.wrap.scrollTop = 0;
+    })
     this.$refs.scrollMenuRef.wrap.addEventListener("scroll", throttle(this.isScrollFunc,100,true));
   },
   data(){

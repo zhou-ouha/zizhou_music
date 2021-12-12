@@ -37,6 +37,10 @@ export default { //将请求暴露到全局
     getMusicMenuDetail(id) {
         return instance.get('/playlist/detail?' + id)
     },
+    // 获取评论
+    getComments(id) {
+        return instance.get("/comment/playlist?" + id)
+    },
     // 使用trackids获取歌曲详情
     getMusicDetail(data) {
         return instance('/song/detail?ids=' + data)
@@ -69,17 +73,30 @@ export default { //将请求暴露到全局
     getLyric(id) {
         return instance.get('/lyric?id=' + id)
     },
-    // 搜索
+    // 搜索建议
     search(keywords) {
         return instance.get('/search/suggest?keywords= ' + keywords)
     },
-    // 获取评论
-    getComments(id) {
-        return instance.get("/comment/playlist?" + id)
-    },
-    // 搜索
+    // 搜索结果
     getSearch(options) {
         return instance.get("/cloudsearch", options)
     },
+    // 获取热门标签
+    getHotTags() {
+        return instance.get("/playlist/hot")
+    },
+    // 获取所有歌单标签
+    getAllTags() {
+        return instance.get("/playlist/catlist")
+    },
+    // 获取标签对应的歌单
+    getMenuByTag(options) {
+        console.log(options.cat)
+        return instance.get("/top/playlist", options)
+    },
+    // 所有排行榜内容摘要
+    getRanking() {
+        return instance.get("/toplist/detail")
+    }
 
 }

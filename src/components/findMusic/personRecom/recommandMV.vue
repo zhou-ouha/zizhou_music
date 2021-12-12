@@ -26,7 +26,7 @@ export default {
 }
 .MV img{
     width: 100%;
-    height: auto;
+    height: 100%;
     border-radius: 4px;
 }
 .MV div{

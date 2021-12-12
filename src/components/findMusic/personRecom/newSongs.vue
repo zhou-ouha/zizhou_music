@@ -8,7 +8,7 @@
                     </div>
                     <div class="right">
                         <div class="musicName">{{item.name}}</div>
-                        <div class="author">{{"作者:" + item.song.artists[0].name}}</div>
+                        <div class="author">{{item.song.artists[0].name}}</div>
                     </div>
             </div>
         </div>
