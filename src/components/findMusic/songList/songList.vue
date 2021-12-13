@@ -87,7 +87,7 @@ export default {
 .imgCard img+.playCount{
     display: none;
 }
-.imgCard img:hover+.playCount{
+.imgCard div:hover .playCount{
     display: block;
     width: 100%;
     position: absolute;

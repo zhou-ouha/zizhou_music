@@ -97,6 +97,9 @@ export default { //将请求暴露到全局
     // 所有排行榜内容摘要
     getRanking() {
         return instance.get("/toplist/detail")
+    },
+    // 获取歌手
+    getSinger(options) {
+        return instance.get("/artist/list", options)
     }
-
 }

@@ -9,9 +9,11 @@
             :src="item.coverImgUrl"
           ></img>
         </div>
-        <el-table
+        <div class="firstBox">
+          <el-table
           :data="item.tracks"
           stripe
+          :show-header="false"
           style="width: 100%">
           <el-table-column
             type="index"
@@ -26,7 +28,10 @@
             width="200">
           </el-table-column>
         </el-table>
+        <span class="getAll" @click="getAll(item.id)">查看全部 ></span>
+        </div>
       </div>
+      
     </div>
     <!-- 全球榜单 -->
     <div class="global">
@@ -56,11 +61,15 @@ export default {
     async getRanking(){
       const {data:res} = await this.$http.getRanking();
       this.firstFour = res.list.splice(0,4);
+      console.log(this.firstFour)
       for(let i of this.firstFour){
         this.tracks.push(i.tracks);
       }
       this.rankingList = res.list;
       console.log(this.rankingList)
+    },
+    getAll(id){
+      this.$router.push('/musicHome/MenuDetail/id='+id)
     }
   }
 }
@@ -80,6 +89,18 @@ export default {
 .img img{
   width: 200px;
   height: 200px;
+}
+.getAll{
+  color: #fff;
+}
+.firstBox{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.getAll:hover{
+  cursor: pointer;
 }
 .title{
   color: #fff;
