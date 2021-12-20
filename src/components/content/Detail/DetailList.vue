@@ -4,6 +4,7 @@
     <el-table
         :header-cell-style="{background:'rgba(10, 10, 10, 0.726)'}"
         :row-style="{background:'rgba(10, 10, 10, 0.726)'}"
+        :show-header="showHeader"
         :data="list"
         stripe
         :row-class-name="tableRowClassName"
@@ -68,6 +69,10 @@ export default {
         type: Boolean,
         default: false,
       },
+      showHeader:{
+        type:Boolean,
+        default:true
+      }
     },
     mixins:[playMusic],
     data(){

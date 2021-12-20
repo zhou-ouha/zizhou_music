@@ -101,5 +101,13 @@ export default { //将请求暴露到全局
     // 获取歌手
     getSinger(options) {
         return instance.get("/artist/list", options)
+    },
+    // 获取新歌速递
+    getNewSong(type) {
+        return instance.get("/top/song?type=" + type)
+    },
+    // 新碟上架
+    getNewDisc() {
+        return instance.get("/album/newest")
     }
 }
