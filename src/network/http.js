@@ -109,5 +109,25 @@ export default { //将请求暴露到全局
     // 新碟上架
     getNewDisc() {
         return instance.get("/album/newest")
+    },
+    // 获取歌手详情
+    getSingerDetail(id) {
+        return instance.get("/artist/detail?id=" + id)
+    },
+    // 获取歌手专辑
+    getSingerAlbum(id) {
+        return instance.get("/artist/album?id=" + id)
+    },
+    // 获取歌手mv
+    getSingerMv(id) {
+        return instance.get("/artist/mv?id=" + id)
+    },
+    // 获取相似歌手
+    getSingerSimilar(id) {
+        return instance.get("/simi/artist?id=" + id)
+    },
+    // 获取歌手描述
+    getSingerDes(id) {
+        return instance.get("/artist/desc?id=" + id)
     }
 }

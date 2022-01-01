@@ -5,7 +5,7 @@
     >
     <div 
       class="info" 
-      v-for="(item,index) in singerList" :key="index"
+      v-for="(item,index) in similars" :key="index"
     >
       <div>
         <el-image
@@ -30,7 +30,7 @@
 export default {
   name:"singeList",
   props:{
-    singerList:Array
+    similars:Array
   },
   methods:{
     toDetail(id){
@@ -44,7 +44,7 @@ export default {
 <style scoped>
 .singerBox{
   width: 95%;
-  margin: 0 auto;
+  margin: 10px auto 0;
 }
 .singerBox .info{
   width: calc(100% / 6 - 10px);

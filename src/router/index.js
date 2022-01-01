@@ -111,6 +111,19 @@ const routes = [{
                     },
                 ]
             },
+            // 歌手详情
+            {
+                path: '/musicHome/artistPage/:id',
+                name: 'artistPage',
+                component: () =>
+                    import ("@/views/musicHome/artistPage/artistPage.vue")
+            },
+            // mv视频详情
+            {
+                path: "/musicHome/videoPage/:id",
+                component: () =>
+                    import ("@/views/musicHome/videoPage/videoPage.vue")
+            }
         ]
     },
 
