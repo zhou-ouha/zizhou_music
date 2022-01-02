@@ -18,6 +18,7 @@
               {{ index + 1 === videoDetail.artists.length ? '' : "/"}}
             </span>
           </span>
+          <span v-else class="creatorName">{{ videoDetail.creator.nickname }}</span>
           <div 
             class="videoName" 
             @click="toggleIntroduce"
