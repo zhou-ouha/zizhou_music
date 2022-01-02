@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props:["pos"],
+  props:["pos","type","id"],
   data(){
     return {
       hot:[],
@@ -36,9 +36,29 @@ export default {
     console.log("mounted");
     this.$bus.$on("send-data",(data)=>{
       console.log("收到数据");
-      this.hot = data.hot
-      this.comments = data.comments
+      console.log(data);
+      if(data){
+        this.hot = data.hot
+        this.comments = data.comments
+      }else{
+        this.getComments();
+      }
     });
+  },
+  methods:{
+    async getComments(){
+      if(this.type == "video"){
+        const {data:res} = await this.$http.getVideoComments(this.id);
+        this.comments = res.comments;
+        this.hot = res.hotComments;
+        console.log(res);
+      }else{
+        const {data:res} = await this.$http.getMvComments(this.id);
+        console.log(res);
+        this.comments = res.comments;
+        this.hot = res.hotComments;
+      }
+    }
   }
 }
 </script>

@@ -129,5 +129,33 @@ export default { //将请求暴露到全局
     // 获取歌手描述
     getSingerDes(id) {
         return instance.get("/artist/desc?id=" + id)
+    },
+    // 获取mv详情
+    getMvDetail(id) {
+        return instance.get("/mv/detail?mvid=" + id)
+    },
+    // 获取MV url
+    getMvUrl(id) {
+        return instance.get("/mv/url?id=" + id)
+    },
+    // 获取视频详情
+    getVideoDetail(id) {
+        return instance.get("/video/detail?id=" + id)
+    },
+    // 获取视频url
+    getVideoUrl(id) {
+        return instance.get("/video/url?id=" + id)
+    },
+    // 获取视频评论
+    getVideoComments(id) {
+        return instance.get("/comment/video?id=" + id)
+    },
+    // 获取mv评论
+    getMvComments(id) {
+        return instance.get("/comment/mv?id=" + id)
+    },
+    // 获取相关视频
+    getSameVideo(id) {
+        return instance.get("/related/allvideo?id=" + id)
     }
 }

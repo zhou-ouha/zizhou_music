@@ -106,6 +106,7 @@ export default {
     async getSingerMv(){
       const {data:res} = await this.$http.getSingerMv(this.$route.params.id);
       this.mvs = res.mvs;
+      console.log(res);
     },
     async getSingerSimilar(){
       const {data:res} = await this.$http.getSingerSimilar(this.$route.params.id);
