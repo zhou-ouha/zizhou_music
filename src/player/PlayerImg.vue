@@ -1,6 +1,6 @@
 <template>
   <div class="playerimg">
-      <img :src="song.pic || song.picUrl" alt="" v-if="song">
+      <img :src="song.pic || song.picUrl" alt="" v-if="song" @click="showPure">
       <img src="@/static/imgs/empty.webp" alt="" v-else>
       <div v-if="song" class="title">
         <span class="one">{{song.name}}</span><span class="two">{{song.name}}</span>
@@ -17,8 +17,18 @@ export default {
           default:() => {}
         }
     },
+    methods:{
+      showPure(){
+        this.$bus.$emit("toggle-pure",this.song);
+      }
+    },
     created(){
       console.log(this.song)
+    },
+    watch:{
+      song:function(newVal,oldVal){
+        this.$bus.$emit("change-song",newVal);
+      }
     }
 }
 </script>
@@ -30,6 +40,9 @@ export default {
 .playerimg img{
   width: 60px;
   height: auto;
+}
+.playerimg img:hover{
+  cursor: pointer;
 }
 .playerimg div{
   width: 10vw;

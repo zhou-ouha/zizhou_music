@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import CommentContent from './CommentContent.vue'
+import CommentContent from '@/components/content/Detail/CommentContent.vue'
 export default {
   components:{
     CommentContent
@@ -48,8 +48,10 @@ export default {
   float: right;
 }
 .title{
-  color: #fff;
-  margin-left: 3%;
+  color: #000;
+  font-weight: bolder;
+  font-size: 20px;
+  margin-left: 10%;
   margin-top: 5px;
   margin-bottom: 5px;
 }

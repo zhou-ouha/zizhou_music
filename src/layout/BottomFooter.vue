@@ -19,7 +19,7 @@ export default {
     margin: 0 auto;
     display: flex;
     flex-direction: row;
-    position: relative;
+    position: absolute;
     z-index: 99999;
     bottom: 0;
 }

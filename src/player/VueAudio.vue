@@ -195,19 +195,25 @@ export default {
       // 当音频播放
       onPlay () {
           this.audio.playing = true;
+          this.$store.commit("changePlaying",true);
           this.$http.getLyric(this.playList[this.currentIndex].id).then((res)=>{
             this.lyric = (res.data.lrc && res.data.lrc.lyric) || '暂无歌词';
+            this.$bus.$emit("get-lyric",this.lyric);
             // console.log(this.lyric);
           })
+          
+
       },
       // 当音频暂停
       onPause () {
           this.audio.playing = false
+          this.$store.commit("changePlaying",false);
       },
       // 当timeupdate事件大概每秒一次，用来更新音频流的当前播放时间
       onTimeupdate(res) {
           // console.log('timeupdate')
           this.audio.currentTime = res.target.currentTime
+          this.$bus.$emit("get-currenttime",this.audio.currentTime);
           this.sliderTime = parseInt(this.audio.currentTime / this.audio.maxTime * 100)
       },
       // 当加载语音流元数据完成后，会触发该事件的回调函数
@@ -287,6 +293,7 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-left: 40px;
 }
 .box-card {
     width: 480px;
@@ -338,6 +345,7 @@ export default {
 .volume{
   width: 150px;
   padding: 0 10px;
+  margin-left: 40px;
   display: flex;
   align-items: center;
   cursor: pointer;

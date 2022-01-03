@@ -65,7 +65,7 @@ export default {
 
 <style scoped>
 .box{
-  width:92%;
+  width:80%;
   margin: 0 auto;
   padding: 15px 0;
   display: flex;

@@ -20,6 +20,9 @@ export default new vuex.Store({
         hideTab: false
     },
     mutations: {
+        changePlaying(state, data) {
+            state.isPlay = data;
+        },
         toggleMenuList(state, data) {
             console.log(data)
             state.toggle = !state.toggle

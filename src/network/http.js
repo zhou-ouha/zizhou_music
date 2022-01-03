@@ -157,5 +157,9 @@ export default { //将请求暴露到全局
     // 获取相关视频
     getSameVideo(id) {
         return instance.get("/related/allvideo?id=" + id)
+    },
+    // 获取歌曲评论
+    getMusicComments(id) {
+        return instance.get("/comment/music?id=" + id)
     }
 }
