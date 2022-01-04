@@ -21,6 +21,7 @@ export const playMusic = {
             } else musicList = this.musicList;
             let url = null;
             let playList = [];
+            console.log(musicList);
             for (let i = 0, length = musicList.length; i < length; i++) {
                 http.getMusicUrl(musicList[i].id).then(res => {
                     url = res.data.data[0].url;

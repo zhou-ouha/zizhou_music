@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <el-scrollbar style="height:81vh" ref="scroll"> -->
+    <el-scrollbar style="height:81vh" ref="scroll">
       <div class="main">
         <div class="back-img">
           <img src="" alt="">
@@ -45,7 +45,7 @@
       <div class="comments">
         <Comment/>
       </div>
-    <!-- </el-scrollbar> -->
+    </el-scrollbar>
   </div>
 </template>
 
@@ -211,8 +211,8 @@ export default {
 }
 
 .comments{
-  background-color: rgba(124, 124, 124, 0.829);
-  margin-top: 400px;
+  /* background-color: rgba(124, 124, 124, 0.829); */
+  margin-top: 500px;
 }
 
 </style>

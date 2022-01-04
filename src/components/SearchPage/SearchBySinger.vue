@@ -1,8 +1,15 @@
 <template>
-  <div class="searchBySinger">
-    <div>
-      <div><img src="" alt=""></div>
-      <div></div>
+  <div>
+    <div v-if="songAll.songList"  class="searchBySinger">
+      <div 
+        v-for="(item, index) in songAll.singerList"
+        class="singerBox"
+        @click="toArtistPage(item.id)"
+      >
+        <img :src="item.picUrl" alt="" style="width:200px;height:200px;">
+        <div>{{item.name}}</div>
+        <!-- {{songAll}} -->
+      </div>
     </div>
   </div>
 </template>
@@ -10,17 +17,18 @@
 <script>
 export default {
   name: "searchBySinger",
+  props:["songAll"],
   data() {
     return {};
   },
   methods: {
     //获取指定页数歌手
-    getSongPage(offset, type) {
-      this.$emit("get-search", offset, type);
-    },
+    // getSongPage(offset, type) {
+    //   this.$emit("get-search", offset, type);
+    // },
     //点击歌手跳转界面
     toArtistPage(id) {
-      // this.$router.push("/musicHome/artistPage/" + id);
+      this.$router.push("/musicHome/artistPage/" + id);
     },
   },
   created() {
@@ -33,47 +41,23 @@ export default {
 </script>
 
 <style scoped>
-/* 当搜索不到时页面展示 */
-.noSearch {
-  display: grid;
-  align-content: center;
-  justify-content: center;
-  width: 70vw;
-  height: 60vh;
+.searchBySinger{
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
 }
-/* 每行歌曲样式 */
-
-.songMesSin {
-  position: relative;
-  width: 100%;
-  height: 150px;
-  line-height: 150px;
-  padding: 15px;
-  /* opacity: 0.8; */
+.singerBox{
+  width: calc(100% / 5 - 1vw);
+  margin: 10px 0;
+  text-align: center;
+  color: #fff;
+}
+.singerBox:hover{
   cursor: pointer;
 }
-
-.songMesDou {
-  position: relative;
-  width: 100%;
-  height: 150px;
-  line-height: 150px;
-  padding: 15px;
-  /* opacity: 0.8; */
-  background: #f9f9f9;
-  cursor: pointer;
-}
-
-.songMesSin:hover,
-.songMesDou:hover {
-  background: #f4f4f4;
-}
-/* 歌手名 */
-.singerName {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 30px;
-  font-weight: 400;
+.singerBox img{
+  border-radius: 10px;
 }
 </style>

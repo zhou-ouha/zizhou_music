@@ -4,6 +4,8 @@ export class Song {
         this.name = song.name;
         this.artist = song.ar[0].name;
         this.album = song.al.name;
+        this.pic = song.al.picUrl;
+        this.id = song.id;
         this.time = formatDate(new Date(song.dt), 'mm:ss');
     }
 }

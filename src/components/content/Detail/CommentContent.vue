@@ -41,22 +41,33 @@ export default {
         this.hot = data.hot
         this.comments = data.comments
       }else{
+        console.log("给爷执行！",this.type);
         this.getComments();
       }
     });
   },
   methods:{
-    async getComments(){
+    async getComments(id){
       if(this.type == "video"){
         const {data:res} = await this.$http.getVideoComments(this.id);
         this.comments = res.comments;
         this.hot = res.hotComments;
         console.log(res);
       }else{
+        console.log(this.id);
         const {data:res} = await this.$http.getMvComments(this.id);
         console.log(res);
         this.comments = res.comments;
         this.hot = res.hotComments;
+      }
+    }
+  },
+  watch:{
+    type:function(newVal, oldVal){
+      console.log(newVal+"--------------"+oldVal);
+      if(newVal != oldVal){
+        console.log("我变心了！");
+        this.getComments();
       }
     }
   }

@@ -64,11 +64,9 @@
 </template>
 
 <script>
-import DetailList from '@/components/content/Detail/DetailList'
 import {initNewSong} from "@/components/findMusic/newSong/initNewSong.js"
 
 export default {
-  components:{DetailList},
   data(){
     return {
       tags:[{tag:"全部",type:0},{tag:"华语",type:7},{tag:"欧美",type:96},{tag:"日本",type:8},{tag:"韩国",type:16}],

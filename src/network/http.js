@@ -5,7 +5,8 @@ import router from '../router'
 
 //创建 axios 实例
 let instance = axios.create({
-        baseURL: "http://localhost:3000", //本地打开项目访问地址，切记需要上线是要改为服务器地址
+        // baseURL: "http://localhost:3000", //本地打开项目访问地址，切记需要上线是要改为服务器地址
+        baseURL: 'http://www.zizhou.icu:3000',
         timeout: 5000, // 请求超过5秒即超时返回错误
     })
     // 请求拦截

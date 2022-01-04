@@ -2,25 +2,25 @@
   <div>
     <div class="card" v-show="isSearch">
       <div class="box">
-        <div class="item" v-show="songs">
+        <div class="item" v-if="songs">
           <span>单曲 :</span>
           <div v-for="(item,index1) in songs" :key="index1+'songs'">
             {{ item.name }}——{{ item.artists[0].name }}
           </div>
         </div>
-        <div class="item" v-show="albums">
+        <div class="item" v-if="albums">
           <span>专辑 :</span>
           <div v-for="(item,index2) in albums" :key="index2+'albums'">
             {{ item.name }}——{{ item.artist.name }}
           </div>
         </div>
-        <div class="item" v-show="playlists">
+        <div class="item" v-if="playlists">
           <span>歌单 :</span>
           <div v-for="(item,index3) in playlists" :key="index3+'playlists'">
             {{ item.name }}
           </div>
         </div>
-        <div class="item" v-show="artists">
+        <div class="item" v-if="artists">
           <span>歌手 :</span>
           <div v-for="(item,index4) in artists" :key="index4+'artists'">
             {{ item.name }}

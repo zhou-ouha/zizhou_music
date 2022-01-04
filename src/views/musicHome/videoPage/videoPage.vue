@@ -8,7 +8,7 @@
           <video :src="videoUrl" controls autoplay></video>
         </div>
         <div class="detail">
-          <el-image :src="videoDetail.cover" class="mvImg"></el-image>
+          <el-image :src="videoDetail.cover || videoDetail.avatarUrl" class="mvImg"></el-image>
           <span v-if="type == 'mv'">
             <span 
               v-for="(item,index) in videoDetail.artists"
@@ -18,17 +18,17 @@
               {{ index + 1 === videoDetail.artists.length ? '' : "/"}}
             </span>
           </span>
-          <span v-else class="creatorName">{{ videoDetail.creator.nickname }}</span>
+          <span v-else class="creatorName">{{ videoDetail.creator.nickname}}</span>
           <div 
             class="videoName" 
             @click="toggleIntroduce"
-          >{{videoDetail.name}}
+          >{{videoDetail.name || videoDetail.title}}
           <i 
             class="iconfont" 
             style="font-weight:bolder;margin-left:10px;"
           >&#xe677;</i></div>
-          <div class="count"><span>发布：{{videoDetail.publishTime}}</span><span>播放：{{videoDetail.playCount}}</span></div>
-          <div class="introduce" v-show="showIntroduce">{{videoDetail.desc}}</div>
+          <div class="count"><span>发布：{{videoDetail.publishTime | formatVideoTime}}</span><span>播放：{{videoDetail.playCount || videoDetail.playTime}}</span></div>
+          <div class="introduce" v-show="showIntroduce">{{videoDetail.desc || videoDetail.description}}</div>
           <el-button><i class="iconfont">&#xe64d;</i>收藏({{videoDetail.subCount}})</el-button>
           <el-button><i class="iconfont">&#xe601;</i>分享({{videoDetail.shareCount}})</el-button>
           <div class="comments">
@@ -44,7 +44,7 @@
               </div>
               <div class="title">精彩评论</div>
               <CommentContent pos="top" :type="type" :id="videoId"/>
-              <div class="title">其他评论</div>
+              <div class="title">最新评论</div>
               <CommentContent pos="bottom" :type="type" :id="videoId"/>
             </div>
           </div>
@@ -74,6 +74,7 @@
 
 <script>
 import CommentContent from "@/components/content/Detail/CommentContent.vue"
+import formatTime from "@/util/tool/formatTime.js"
 export default {
   components:{CommentContent},
   data(){
@@ -121,7 +122,8 @@ export default {
     async getVideoUrl(){
       if(this.type == "video"){
         const {data:res} = await this.$http.getVideoUrl(this.videoId);
-        this.videoUrl = res.data.url;
+        console.log(res);
+        this.videoUrl = res.urls[0].url;
       }else {
         const {data:res} = await this.$http.getMvUrl(this.videoId);
         this.videoUrl = res.data.url;
@@ -149,6 +151,12 @@ export default {
       }
     }
   },
+  filters:{
+    formatVideoTime:function (time){
+      if(typeof time == "String") return time;
+      return formatTime(time);
+    }
+  }
 }
 </script>
 
@@ -207,6 +215,7 @@ video{
   color: rgb(131, 131, 131);
 }
 .commentTitle{
+
   color:#fff;
   font-size: 20px;
   margin-top: 40px;
@@ -216,10 +225,12 @@ video{
   width: 80%;
 }
 .commentsContent .title{
+  width: 80%;
   color: #fff;
-  margin-left: 3%;
+  margin: 40px auto 5px;
+  /* margin-left: 3%;
   margin-top: 40px;
-  margin-bottom: 5px;
+  margin-bottom: 5px; */
 }
 .commentsBtn{
   float: right;
@@ -241,6 +252,7 @@ video{
 }
 .sameImg{
   width: 55%;
+  border-radius: 10px;
 }
 .sameIntroduce{
   width: 45%;
@@ -248,6 +260,7 @@ video{
 .sameTitle{
   font-size: 14px;
   margin-top: 10px;
+  margin-left: 10px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;

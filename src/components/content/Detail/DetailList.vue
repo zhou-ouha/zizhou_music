@@ -96,6 +96,8 @@ export default {
         //   return;
         // }
         this.currentIndex = row.index;
+        this.musicList = this.list
+        console.log(this.list);
         this.playMusic(row.index);
       },
       async getUrl(data){

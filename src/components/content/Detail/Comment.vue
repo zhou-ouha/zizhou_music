@@ -13,7 +13,7 @@
     <div>
       <CommentContent pos="top"/>
     </div>
-    <div class="title">其他评论</div>
+    <div class="title">最新评论</div>
     <div>
       <CommentContent pos="bottom"/>
     </div>

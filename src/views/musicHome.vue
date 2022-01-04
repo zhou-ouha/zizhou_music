@@ -9,9 +9,8 @@
         <!-- 右侧主体部分 -->
         <BodyRight></BodyRight>
       </div>
-      <el-scrollbar style="height:81vh" ref="scroll">
+      
       <transition name="pure">
-        
         <div class="pure" v-show="showPure == true">
           <purePage 
             :song="song" 
@@ -19,7 +18,6 @@
             :currentTime="currentTime"
           />
         </div>
-      
       </transition>
       </el-scrollbar>
       <!-- 底部播放器 -->
@@ -96,17 +94,17 @@ export default {
 .pure{
   width: 100%;
   height: calc(100vh - 19vh);
-  position: relative;
-  top:0;
-  z-index: -1;
+  /* position: relative; */
+  /* top:0;
+  z-index: -1; */
   background-color: rgba(124, 124, 124, 0.829);
 }
-.pure-enter-active,.pure-leave-active{
+/* .pure-enter-active,.pure-leave-active{
   transition: all 0.5s;
 }
 .pure-enter, .pure-leave-to{
   top: 90.5vh;
-}
+} */
 ::-webkit-scrollbar{
   display:none;
 }
