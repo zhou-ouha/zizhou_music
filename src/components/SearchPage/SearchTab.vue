@@ -1,67 +1,60 @@
 <template>
-  <div class="Tab">
-    <div class="tabBar" ref="tabBar">
-        <div v-for="(name,index) in tabName" :class="{bigSize:index === currentTabIndex}" @click="toggleTab(name,index)">
-        {{name}}<span :class="{tabLine:index === currentTabIndex}"></span>
-        </div>
-    </div>
+  <div class="searchHeadTab">
+    <el-menu
+      :default-active="this.$route.path"
+      class="el-menu-demo"
+      mode="horizontal"
+      :router="true"
+    >
+      <el-menu-item index="/musicHome/SearchPage/SearchBySong">单曲</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchBySinger">歌手</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchByAlbum">专辑</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchByVideo">视频</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchBySongList">歌单</el-menu-item>
+    </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  props:{
-    tabName:{
-        type:Array,
-        required:true,
-        default:[]
-    },
-    tabPath:{
-        type:Array,
-        required:true,
-        default:[]
-    },
+  name: "searchHeadTab",
+  components: {},
+  data() {
+    return {};
   },
-  data(){
-    return {
-      currentTabIndex:0
-    }
-  },
-  methods:{
-    toggleTab(name,index){
-      this.currentTabIndex = index;
-      this.$router.replace(this.tabPath[index]);
-    }
-  }
-}
+};
 </script>
 
 <style scoped>
-.Tab{
+/* 点击出来的下划线进行修改 */
+.el-menu {
+    
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding-left: 0;
+    background-color: transparent;
+}
+.el-menu-item{
   color: #fff;
-  background-color: rgba(4, 4, 4, 0);
-  padding-bottom: 1vh;
+  font-size: 20px;
+  font-weight: bold;
 }
-.tabBar{
-  display: flex;
-  justify-content: center;
-  margin-left: 1vw;
-  font-size: 18px;
+.el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
+    background-color: transparent;
 }
-.tabBar div{
-  padding: 4vh 2vw 0;
-  text-align: center;
+.el-menu--horizontal>.el-menu-item.is-active {
+    border-bottom: 2px solid #ec4141;
+    color: #fff;
+    font-weight: bolder;
 }
-.tabBar .tabLine{
-  display: block;
-  width: 200%;
-  height: 2px;
-  margin-left: -50%;
-  margin-top: 4px;
-  background-color: rgb(255, 118, 118);
-  
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+    outline: 0;
+    color: #fff;
 }
-.bigSize{
-  font-size: 18px;
-}
+/* 整体的下划线进行隐藏 */
+
+.el-menu.el-menu--horizontal {
+  border-bottom: none;
+} 
 </style>

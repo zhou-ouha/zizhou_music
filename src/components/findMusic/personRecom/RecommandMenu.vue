@@ -8,22 +8,36 @@
                   :key="index"
                   @click="getDetail(item.id)"
                 >
-                <!-- 歌单封面 -->
-                <img :src="item.picUrl" alt="">
-                <!-- 播放数量 -->
-                <div class="playCount">
+                    <el-skeleton style="width: 100%" :loading="false" animated>
+                        <template slot="template">
+                            <el-skeleton-item
+                            variant="image"
+                            style="width: 200px; height: 200px;"
+                            />
+                            <div style="padding: 0;">
+                                <!-- <el-skeleton-item variant="h3" style="width: 100%;" /> -->
+                            </div>
+                        </template>
+                        <template>
+                            <!-- 歌单封面 -->
+                            <img :src="item.picUrl" alt="">
+                            <!-- 播放数量 -->
+                            <div class="playCount">
+                                
+                                <div>
+                                    <i class="el-icon-headset" style="margin-right:4px;"></i>{{
+                                        item.playCount >= 10000
+                                        ? (item.playCount / 10000).toFixed(0) + "万"
+                                        : item.playCount
+                                    }}
+                                </div>
+                                
+                            </div>
+                            <!-- 歌单描述 -->
+                            <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
+                        </template> 
+                    </el-skeleton>
                     
-                    <div>
-                        <i class="el-icon-headset" style="margin-right:4px;"></i>{{
-                            item.playCount >= 10000
-                            ? (item.playCount / 10000).toFixed(0) + "万"
-                            : item.playCount
-                        }}
-                    </div>
-                    
-                </div>
-                <!-- 歌单描述 -->
-                <span class="menuName" style="font-size:.5em;">{{item.name}}</span>
                 </div>
             </div>
         </div>
@@ -42,7 +56,8 @@ export default {
     },
     data(){
         return {
-            
+            // 加载状态
+            loading:true
         }
     },
     methods:{

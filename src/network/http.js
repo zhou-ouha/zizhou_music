@@ -2,17 +2,24 @@
 import axios from 'axios'
 import store from '../store'
 import router from '../router'
+import { Loading } from 'element-ui';
 
 //创建 axios 实例
 let instance = axios.create({
-        // baseURL: "http://localhost:3000", //本地打开项目访问地址，切记需要上线是要改为服务器地址
-        baseURL: 'http://www.zizhou.icu:3000',
-        timeout: 5000, // 请求超过5秒即超时返回错误
-    })
-    // 请求拦截
+    baseURL: "http://localhost:3000", //本地打开项目访问地址，切记需要上线是要改为服务器地址
+    // baseURL: 'http://www.zizhou.icu:3000',
+    timeout: 5000, // 请求超过5秒即超时返回错误
+})
+let loading;
+// 请求拦截
 instance.interceptors.request.use(
         config => {
-            // console.log('request请求配置', config)
+            loading = Loading.service({
+                fullscreen: true,
+                text: "客官稍等——小的拼命跑",
+                background: "rgba(0, 0, 0, 0.8)",
+                customClass: "#right"
+            })
             return config
         },
         err => {
@@ -22,6 +29,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
         response => {
             // console.log('成功响应：', response)
+            loading.close();
             return response
         },
         error => {
@@ -63,7 +71,7 @@ export default { //将请求暴露到全局
         return instance.get('/personalized/privatecontent/list?limit=3')
     },
     // 获取推荐最新音乐
-    getNewSong() {
+    getRecoNewSong() {
         return instance.get('/personalized/newsong?limit=12')
     },
     // 获取推荐MV

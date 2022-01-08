@@ -35,7 +35,15 @@
 
 <script>
 export default {
-  props:["songAll"]
+  props:["songAll"],
+  created(){
+    this.search(0,"menuList");
+  },
+  methods:{
+    search(offset,type){
+      this.$emit("getSongPage",offset,type);
+    }
+  }
 }
 </script>
 

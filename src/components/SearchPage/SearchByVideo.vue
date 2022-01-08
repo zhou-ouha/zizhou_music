@@ -29,11 +29,12 @@ export default {
     toVideoPage(id) {
       this.$router.push("/musicHome/videoPage/" + id);
     },
+    search(offset,type){
+      this.$emit("getSongPage",offset,type);
+    }
   },
   created() {
-    this.$bus.$on("get-search",(data)=>{
-      this.getSongPage(0, "Singer");
-    })
+    this.search(0,"Video");
     
   },
 };

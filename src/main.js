@@ -6,7 +6,7 @@ import './assets/icon/iconfont.css'
 import VueParticles from 'vue-particles'
 import './util/css/global.css'
 import http from '@/network/http'
-import { Button, Slider, Carousel, CarouselItem, Input, Row, Col, Tag, Table, TableColumn, Card, Scrollbar, Drawer, Menu, MenuItem, Divider, Pagination, Image } from 'element-ui'
+import { Button, Slider, Carousel, CarouselItem, Input, Row, Col, Tag, Table, TableColumn, Card, Scrollbar, Drawer, Menu, MenuItem, Divider, Pagination, Image, Skeleton, SkeletonItem } from 'element-ui'
 Vue.use(Button)
 Vue.use(Slider)
 Vue.use(Carousel)
@@ -25,6 +25,8 @@ Vue.use(MenuItem)
 Vue.use(Divider)
 Vue.use(Pagination)
 Vue.use(Image)
+Vue.use(Skeleton)
+Vue.use(SkeletonItem)
 
 
 

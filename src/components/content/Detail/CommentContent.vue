@@ -35,13 +35,13 @@ export default {
   mounted(){
     console.log("mounted");
     this.$bus.$on("send-data",(data)=>{
-      console.log("收到数据");
-      console.log(data);
+      console.log("评论收到数据");
+      // console.log(data);
       if(data){
         this.hot = data.hot
         this.comments = data.comments
       }else{
-        console.log("给爷执行！",this.type);
+        // console.log("给爷执行！",this.type);
         this.getComments();
       }
     });
@@ -52,11 +52,11 @@ export default {
         const {data:res} = await this.$http.getVideoComments(this.id);
         this.comments = res.comments;
         this.hot = res.hotComments;
-        console.log(res);
+        // console.log(res);
       }else{
         console.log(this.id);
         const {data:res} = await this.$http.getMvComments(this.id);
-        console.log(res);
+        // console.log(res);
         this.comments = res.comments;
         this.hot = res.hotComments;
       }
@@ -64,9 +64,9 @@ export default {
   },
   watch:{
     type:function(newVal, oldVal){
-      console.log(newVal+"--------------"+oldVal);
+      // console.log(newVal+"--------------"+oldVal);
       if(newVal != oldVal){
-        console.log("我变心了！");
+        // console.log("我变心了！");
         this.getComments();
       }
     }

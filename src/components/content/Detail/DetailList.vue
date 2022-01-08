@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <div>name:{{list[0]}}</div> -->
     <el-table
+        
         :header-cell-style="{background:'rgba(10, 10, 10, 0.726)'}"
         :row-style="{background:'rgba(10, 10, 10, 0.726)'}"
         :show-header="showHeader"
@@ -83,7 +83,7 @@ export default {
     },
     mounted(){
       this.musicList = this.list
-      console.log(this.list)
+      // console.log(this.list)
       this.$bus.$on('musicList',this.getHandler);
     },
     methods:{
@@ -97,7 +97,7 @@ export default {
         // }
         this.currentIndex = row.index;
         this.musicList = this.list
-        console.log(this.list);
+        // console.log(this.list);
         this.playMusic(row.index);
       },
       async getUrl(data){

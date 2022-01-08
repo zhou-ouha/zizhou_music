@@ -7,9 +7,13 @@
         <!-- 左侧菜单 -->
         <BodyLeft></BodyLeft>
         <!-- 右侧主体部分 -->
-        <BodyRight></BodyRight>
+        <div id="right">
+          <el-scrollbar ref="scrollMenuRef" style="height:100%">
+            <router-view></router-view>
+          </el-scrollbar>
+        </div>
+        <!-- <BodyRight></BodyRight> -->
       </div>
-      
       <transition name="pure">
         <div class="pure" v-show="showPure == true">
           <purePage 
@@ -30,14 +34,12 @@
 import TopHeader from '@/layout/TopHeader'
 import BottomFooter from '@/layout/BottomFooter'
 import BodyLeft from '@/layout/BodyLeft'
-import BodyRight from '@/layout/BodyRight'
 import purePage from '@/components/purePage/purePage.vue'
 export default {
   components:{
     TopHeader,
     BottomFooter,
     BodyLeft,
-    BodyRight,
     purePage
   },
   mounted(){
@@ -94,17 +96,14 @@ export default {
 .pure{
   width: 100%;
   height: calc(100vh - 19vh);
-  /* position: relative; */
-  /* top:0;
-  z-index: -1; */
   background-color: rgba(124, 124, 124, 0.829);
 }
-/* .pure-enter-active,.pure-leave-active{
-  transition: all 0.5s;
+#right{
+  width: 88%;
+  height: calc(100vh - 19vh);
+  background-color: rgba(10, 10, 10, 0.726);
+  overflow: hidden;
 }
-.pure-enter, .pure-leave-to{
-  top: 90.5vh;
-} */
 ::-webkit-scrollbar{
   display:none;
 }

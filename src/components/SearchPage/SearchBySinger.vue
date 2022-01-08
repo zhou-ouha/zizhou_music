@@ -6,6 +6,7 @@
         class="singerBox"
         @click="toArtistPage(item.id)"
       >
+      
         <img :src="item.picUrl" alt="" style="width:200px;height:200px;">
         <div>{{item.name}}</div>
         <!-- {{songAll}} -->
@@ -23,19 +24,21 @@ export default {
   },
   methods: {
     //获取指定页数歌手
-    // getSongPage(offset, type) {
-    //   this.$emit("get-search", offset, type);
-    // },
+    getSongPage(offset, type) {
+      this.$emit("getSongPage", offset, type);
+    },
     //点击歌手跳转界面
     toArtistPage(id) {
       this.$router.push("/musicHome/artistPage/" + id);
     },
   },
   created() {
-    this.$bus.$on("get-search",(data)=>{
-      this.getSongPage(0, "Singer");
-    })
-    
+    // this.$bus.$on("get-search",(data)=>{
+    //   this.getSongPage(0, "Singer");
+    // })
+    this.getSongPage(0,"Singer");
+    // console.log(this.songAll);
+    console.log("创建页面！！！");
   },
 };
 </script>

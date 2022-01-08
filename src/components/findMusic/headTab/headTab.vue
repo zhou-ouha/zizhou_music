@@ -37,7 +37,8 @@ export default {
 }
 .el-menu-item{
   color: #fff;
-  font-weight: bold;
+  font-weight: bolder;
+  font-size: 16px;
 }
 .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
     background-color: transparent;
@@ -45,16 +46,13 @@ export default {
 .el-menu--horizontal>.el-menu-item.is-active {
     border-bottom: 2px solid #ec4141;
     color: #fff;
-    font-size: 20px;
+    /* font-size: 20px; */
     font-weight: bolder;
-}/* 
-.el-menu-item.is-active {
-  border-color: #ec4141;
-  font-size: 20px;
-  font-weight: 400;
-  
 }
-*/
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+    outline: 0;
+    color: #fff;
+}
 /* 整体的下划线进行隐藏 */
 
 .el-menu.el-menu--horizontal {

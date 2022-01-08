@@ -13,23 +13,26 @@ export default {
   components:{
     DetailList
   },
-  props:["songAll"],
-  mounted(){
+  props:["songAll","getSongPage"],
+  created(){
     this.$bus.$on("wy",(data)=>{
       console.log("-----"+data);
     })
     console.log(this.songAll);
-    this.search(0,"Song");
-  },
-  data(){
-    return {
-      searchInfo:'',
-    }
+    
   },
   methods:{
     search(offset,type){
-      // this.$emit("search",offset,type)
+      this.$emit("getSongPage",offset,type)
     }
+  },
+  data(){
+    return {
+      searchInfo:this.$store.state.searchInfo,
+    }
+  },
+  created(){
+    this.search(0,"Song")
   }
 }
 </script>

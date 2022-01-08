@@ -78,7 +78,6 @@ export default {
 }
 .content{
   color: #000;
-  letter-spacing: 5px;
   opacity: 0.3;
 }
 .box-card {

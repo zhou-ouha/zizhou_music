@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     textFormat(text) {
+      console.log(text.split());
       let newText = text.split("\n");
       return newText;
     },

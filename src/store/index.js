@@ -4,7 +4,7 @@ vue.use(vuex)
 export default new vuex.Store({
     state: {
         // 菜单切换
-        toggle: false,
+        searchInfo: sessionStorage.getItem("searchInfo"),
         // 歌单详情
         details: [],
         // trackids

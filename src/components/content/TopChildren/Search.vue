@@ -32,6 +32,7 @@ export default {
   },
   methods:{
     search(){
+      console.log(this.keywords.trim());
       if(this.keywords.trim() == "") return;
       this.isSearch = false;
       let _this = this;

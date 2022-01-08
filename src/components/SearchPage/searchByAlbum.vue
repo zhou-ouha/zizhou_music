@@ -47,8 +47,12 @@ export default {
   },
   created(){
     console.log(this.songAll);
+    this.search("Album",0);
   },
   methods:{
+    search(type,offset){
+      this.$emit("getSongPage",offset,type)
+    },
     tableRowClassName({row,rowIndex}){
       row.index = rowIndex;
     },

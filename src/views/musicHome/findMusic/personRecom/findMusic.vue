@@ -19,10 +19,8 @@
           :recommandMV="recommandMV"
         />
         <!-- 提示 -->
-        <div style="display: flex;align-items: center;justify-content: center;flex-direction: column;color:#fff;">
-            <div style="margin:8px 0;">暂时还不能改变栏目顺序</div>
+        <div style="display: flex;align-items: center;justify-content: center;flex-direction: column;color:#fff;margin:100px auto;">
             <div style="margin:8px 0;"> ^ - ^ </div>
-            <div style="margin:8px 0;"> @ _ @ </div>
         </div>
     </div>
 </template>
@@ -72,7 +70,7 @@ export default {
 
         })
 
-        this.$http.getNewSong().then(res=>{
+        this.$http.getRecoNewSong().then(res=>{
             this.newSong = res.data.result
         },err=>{
 

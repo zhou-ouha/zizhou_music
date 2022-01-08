@@ -317,7 +317,7 @@ export default {
 }
 .timeProgress{
   position: relative;
-  margin-top: -1vh;
+  margin-top: -1.5vh;
 }
 .forward,.next{
   font-size: 30px;
