@@ -1,0 +1,194 @@
+/* 全局修改slider的样式 */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #111;
+    text-decoration: none;
+}
+
+
+/* 主页布局共同样式 */
+
+.commonBox {
+    padding: 2vh 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: #fff;
+}
+
+.more {
+    color: #fff;
+}
+
+
+/* element元素 */
+
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
+    border-color: rgba(124, 124, 124, 0.829);
+    outline: none;
+}
+
+.el-slider__button {
+    width: 6px;
+    height: 6px;
+    border: 2px solid #ffffff;
+}
+
+.el-slider__button:hover {
+    cursor: default;
+}
+
+.el-slider__button-wrapper.hover,
+.el-slider__button-wrapper:hover {
+    cursor: default;
+}
+
+.el-slider__bar {
+    background-color: #EC4141;
+}
+
+.el-slider__bar:hover {
+    cursor: default;
+}
+
+.el-slider__runway {
+    cursor: default;
+}
+
+
+/* 去掉全局scrollbar的底部滚动条 */
+
+.el-scrollbar__wrap {
+    overflow-x: hidden;
+}
+
+.el-scrollbar__thumb {
+    position: relative;
+    display: none!important;
+}
+
+
+/* 按钮悬浮效果 */
+
+.el-button--danger {
+    background: #FE3C32;
+    border-color: #FE3C32;
+    color: #FFF;
+}
+
+.el-button--default {
+    background: rgba(10, 10, 10, 0.274);
+    border-color: rgba(10, 10, 10, 0.274);
+    color: #fff;
+}
+
+.el-button--danger:focus,
+.el-button--danger:hover {
+    background: #FE3C32;
+    border-color: #FE3C32;
+    color: #FFF;
+}
+
+.el-button--default:focus,
+.el-button--default:hover {
+    background: rgba(10, 10, 10, 0.274);
+    border-color: rgba(10, 10, 10, 0.274);
+    color: #fff;
+}
+
+
+/* 歌曲列表样式 */
+
+tr {
+    background-color: rgba(255, 10, 10, 0)!important;
+}
+
+thead {
+    background: transparent!important;
+}
+
+.el-table {
+    background: transparent!important;
+    color: #fff;
+}
+
+
+/* 去掉空数据底部白条 */
+
+.el-table::before {
+    height: 0;
+}
+
+tr>th {
+    background: rgba(10, 10, 10, 0)!important;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover>td {
+    cursor: pointer;
+    background-color: rgba(93, 90, 90, 0.6) !important;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+    background: rgba(66, 64, 64, 0.32);
+}
+
+.el-table td,
+.el-table th.is-leaf {
+    border-bottom: 1px solid rgba(46, 43, 43, 0);
+}
+
+.el-table__empty-block {
+    background: transparent!important;
+}
+
+.el-table__empty-text {
+    line-height: 60px;
+    width: 50%;
+    color: #fff;
+    background: transparent;
+}
+
+
+/* 抽屉 */
+
+.el-drawer {
+    background-color: rgb(34, 33, 33);
+}
+
+.el-drawer.ltr,
+.el-drawer.rtl,
+.el-drawer__container {
+    top: 0;
+    bottom: 0;
+    height: 95%;
+}
+
+
+/* card */
+
+.el-card {
+    border-radius: 4 px;
+    border: 1 px solid rgba(17, 17, 17, 0.329)!important;
+    background-color: rgba(17, 17, 17, 0.329);
+    overflow: hidden;
+    color: #fff;
+}
+
+.el-card__body {
+    padding: 10px;
+}
+
+.el-scrollbar__wrap {
+    overflow-y: scroll;
+}
+
+.el-textarea__inner {
+    background-color: transparent;
+}

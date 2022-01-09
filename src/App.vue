@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <vue-particles
+    <!-- 粒子背景 -->
+    <!-- <vue-particles
       color="#646775"
-      :particleOpacity="0.7"
+      :particleOpacity="0.8"
       :particlesNumber="90"
       shapeType="circle"
       :particleSize="2"
@@ -17,16 +18,24 @@
       :clickEffect="true"
       clickMode="push"
       class="lizi"
-    ></vue-particles>
-    <router-view/>
+    ></vue-particles> -->
+    <router-view></router-view>
   </div>
 </template>
+<script>
+
+export default {
+  components:{
+    
+    }
+}
+</script>
 
 <style>
 
 #particles-js{
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: absolute;  
   z-index: -1; 
   top: 0;
@@ -35,5 +44,8 @@
 
 .lizi {
   background-color: #ffffff;
+}
+#app{
+  position: relative;
 }
 </style>
