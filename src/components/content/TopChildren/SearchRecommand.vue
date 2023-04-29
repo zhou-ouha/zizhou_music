@@ -57,7 +57,7 @@ export default {
         async function(){
           let res = await this.$http.search(this.keywords)
           console.log(res)
-          const { albums, artists, playlists, songs } = res.data.result;
+          const { albums = [], artists = [], playlists = [], songs = [] } = res.data.result;
           this.albums = albums;
           this.artists = artists;
           this.playlists = playlists;

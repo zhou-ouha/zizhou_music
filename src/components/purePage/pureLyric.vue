@@ -67,6 +67,10 @@ export default {
 <style scoped>
 .lyric{
   position: absolute;
+  margin-top: 10px;
+  /* border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  border: 1px solid #fff; */
 }
 
 .text {
@@ -77,7 +81,7 @@ export default {
   text-align: center;
 }
 .content{
-  color: #000;
+  color: rgb(255, 255, 255);
   opacity: 0.3;
 }
 .box-card {

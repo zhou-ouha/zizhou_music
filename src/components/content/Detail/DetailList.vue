@@ -1,57 +1,59 @@
 <template>
   <div>
     <el-table
-        
-        :header-cell-style="{background:'rgba(10, 10, 10, 0.726)'}"
-        :row-style="{background:'rgba(10, 10, 10, 0.726)'}"
-        :show-header="showHeader"
-        :data="list"
-        stripe
-        :row-class-name="tableRowClassName"
-        @row-dblclick="handleDbclick"
-        style="width: 96%;margin:0 auto;">
-        <el-table-column
+      :header-cell-style="{background:'rgba(10, 10, 10, 0.726)'}"
+      :row-style="{background:'rgba(10, 10, 10, 0.726)'}"
+      :show-header="showHeader"
+      :data="list"
+      stripe
+      :row-class-name="tableRowClassName"
+      @row-dblclick="handleDbclick"
+      style="width: 96%;margin:0 auto;">
+      <el-table-column
         label=""
         width="50">
-          <template slot-scope="scope">
-            <span 
-              class="iconfont" 
-              style="color:#fe3c32;"
-              v-show="scope.$index === currentIndex"
-            >&#xe62d;</span>
-            <span 
-              v-show="scope.$index !== currentIndex"
-            >{{scope.$index + 1}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-        label="操作"
-        width="120">
-          <template slot-scope="scope">
-            <span class="iconfont" @click="handleEdit(scope.$index, scope.row)" style="margin-right:20%" v-show="true">&#xe83f;</span>
-            <span class="iconfont" @click="handleEdit(scope.$index, scope.row)" style="margin-right:20%" v-show="false">&#xe602;</span>
-            <span class="iconfont" @click="handleDelete(scope.$index, scope.row)">&#xe730;</span>
-          </template>
-        </el-table-column>
-        <el-table-column
+        <template slot-scope="scope">
+          <span 
+            class="iconfont" 
+            style="color:#fe3c32;"
+            v-show="scope.$index === currentIndex"
+          >&#xe62d;</span>
+          <span 
+            v-show="scope.$index !== currentIndex"
+          >{{scope.$index + 1}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+      label="操作"
+      width="120">
+        <template slot-scope="scope">
+          <span class="iconfont" @click="handleEdit(scope.$index, scope.row)" style="margin-right:20%" v-show="true">&#xe83f;</span>
+          <span class="iconfont" @click="handleEdit(scope.$index, scope.row)" style="margin-right:20%" v-show="false">&#xe602;</span>
+          <span class="iconfont" @click="handleDelete(scope.$index, scope.row)">&#xe730;</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
         prop="name"
         label="歌曲"
         width="500">
-        </el-table-column>
-        <el-table-column
+      </el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
         prop="artist"
         label="歌手"
         >
-        </el-table-column>
-        <el-table-column
+      </el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
         prop="album"
         label="专辑"
         width="300">
-        </el-table-column>
-        <el-table-column
+      </el-table-column>
+      <el-table-column
         prop="time"
         label="时间">
-        </el-table-column>
+      </el-table-column>
     </el-table>      
   </div>
 </template>
@@ -83,7 +85,6 @@ export default {
     },
     mounted(){
       this.musicList = this.list
-      // console.log(this.list)
       this.$bus.$on('musicList',this.getHandler);
     },
     methods:{
@@ -97,7 +98,6 @@ export default {
         // }
         this.currentIndex = row.index;
         this.musicList = this.list
-        // console.log(this.list);
         this.playMusic(row.index);
       },
       async getUrl(data){

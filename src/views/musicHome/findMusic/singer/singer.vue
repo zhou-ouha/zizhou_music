@@ -4,9 +4,14 @@
       <singerTag
         @getSinger="getSinger"
         @clearSingerInfo="clearSingerInfo"
+        ref="singerTag"
       />
       <singerList
         :singerList="singerList"
+        infinite-scroll-distance="2px"
+        :infinite-scroll-immediate="false"
+        v-infinite-scroll="load"
+        class="infinite-list-item"
       />
     </div>
   </div>
@@ -19,7 +24,9 @@ export default {
   components:{singerTag,singerList},
   data(){
     return {
-      singerList:[]
+      singerList:[],
+      more:true,
+      page:0
     }
   },
   mounted(){
@@ -33,7 +40,7 @@ export default {
           area:area,
           initial:initial,
           limit:30,
-          offset:page * 12
+          offset:page * 30
         }
       });
       
@@ -42,6 +49,16 @@ export default {
     },
     clearSingerInfo(){
       this.singerList.splice(0);
+    },
+    load(){
+      if(this.more == false) return;
+      this.getSinger(
+        this.$refs.singerTag.languageTag,
+        this.$refs.singerTag.genderTag,
+        this.$refs.singerTag.firTag,
+        this.page
+      );
+      this.page++;
     }
   }
 }

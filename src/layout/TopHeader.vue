@@ -21,11 +21,12 @@ export default {
 #header{
     width: 100%;
     height: 9vh;
-    background-color: rgba(124, 124, 124, 0.829);
+    background-color: #334;
     margin: 0 auto;
     text-align: center;
     line-height: 8vh;
     color: #fff;
+    border-bottom: 1px solid rgb(255, 22, 22);
 }
 #header .title{
     color: #fff;

@@ -34,7 +34,7 @@
         <div class="lyric">
           <div class="songName">
             <div style="font-weight:bolder;font-size:22px;">{{songDetail.name}}</div>
-            <span style="color:#fff; margin-top:'10px'">{{songDetail.artist}}-{{songDetail.name}}</span>
+            <span style="color:#33f4f5; margin-top:'10px'">{{songDetail.artist}}-{{songDetail.name}}</span>
           </div>
           <pureLyric
             :lyric="lyric"
@@ -110,9 +110,10 @@ export default {
   display: flex;
   position:relative;
   justify-content: space-around;
+  margin-top: 20px;
 }
 .disc{
-  width: 25%;
+  width: 30%;
   margin-left: 28px;
   position: relative;
 }
@@ -201,13 +202,14 @@ export default {
     left: 74px;
 }
 .lyric{
-  width: 50%;
+  width: 36%;
   height: 300px;
   margin-right: 100px;
+  color: #fff;
 }
 .songName{
   text-align: center;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .comments{

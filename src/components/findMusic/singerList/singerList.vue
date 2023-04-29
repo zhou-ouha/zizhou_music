@@ -45,6 +45,7 @@ export default {
 .singerBox{
   width: 95%;
   margin: 0 auto;
+  overflow: hidden;
 }
 .singerBox .info{
   width: calc(100% / 6 - 10px);

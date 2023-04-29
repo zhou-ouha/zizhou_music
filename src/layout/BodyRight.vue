@@ -35,7 +35,7 @@ export default {
 #right{
   width: 88%;
   height: calc(100vh - 19vh);
-  background-color: rgba(10, 10, 10, 0.726);
+  background-color: rgb(29, 29, 29);
   overflow: hidden;
 }
 </style>

@@ -27,6 +27,7 @@
       <!-- 底部播放器 -->
       <BottomFooter></BottomFooter>
     </div>
+    <login v-show="showLogin"/>
   </div>
 </template>
 
@@ -35,12 +36,14 @@ import TopHeader from '@/layout/TopHeader'
 import BottomFooter from '@/layout/BottomFooter'
 import BodyLeft from '@/layout/BodyLeft'
 import purePage from '@/components/purePage/purePage.vue'
+import login from '@/components/login/login'
 export default {
   components:{
     TopHeader,
     BottomFooter,
     BodyLeft,
-    purePage
+    purePage,
+    login
   },
   mounted(){
     let _this = this;
@@ -61,13 +64,19 @@ export default {
     this.$bus.$on("get-currenttime",function(time){
       _this.currentTime = time;
     })
+    // 登录弹窗
+    this.$bus.$on("show-login",function(data){
+      console.log("toggle登录");
+      _this.showLogin = data;
+    })
   },
   data(){
     return {
       showPure:false,
       song:null,
       lyric:null,
-      currentTime:0
+      currentTime:0,
+      showLogin: false,
     }
   },
   methods:{
@@ -96,12 +105,12 @@ export default {
 .pure{
   width: 100%;
   height: calc(100vh - 19vh);
-  background-color: rgba(124, 124, 124, 0.829);
+  background-color: #334;
 }
 #right{
   width: 88%;
   height: calc(100vh - 19vh);
-  background-color: rgba(10, 10, 10, 0.726);
+  background-color: #334;
   overflow: hidden;
 }
 ::-webkit-scrollbar{

@@ -46,12 +46,15 @@
             </template>
           </el-table-column>
           <el-table-column
+            :show-overflow-tooltip="true"
             prop="name">
           </el-table-column>
           <el-table-column
+            :show-overflow-tooltip="true"
             prop="singerName">
           </el-table-column>
           <el-table-column
+            :show-overflow-tooltip="true"
             prop="albumName">
           </el-table-column>
           <el-table-column

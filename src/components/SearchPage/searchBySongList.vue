@@ -19,6 +19,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            :show-overflow-tooltip="true"
             prop="name">
           </el-table-column>
           <el-table-column

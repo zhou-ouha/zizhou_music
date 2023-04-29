@@ -3,10 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './assets/icon/iconfont.css'
-import VueParticles from 'vue-particles'
 import './util/css/global.css'
 import http from '@/network/http'
-import { Button, Slider, Carousel, CarouselItem, Input, Row, Col, Tag, Table, TableColumn, Card, Scrollbar, Drawer, Menu, MenuItem, Divider, Pagination, Image, Skeleton, SkeletonItem } from 'element-ui'
+// import "@/plugins/element.js"
+import { Button, Slider, Carousel, CarouselItem, Input, Row, Col, Tag, Table, TableColumn, Card, Scrollbar, Drawer, Menu, MenuItem, Divider, Pagination, Image, Skeleton, SkeletonItem, Loading, InfiniteScroll, Dialog, Form, FormItem, Avatar } from 'element-ui'
 Vue.use(Button)
 Vue.use(Slider)
 Vue.use(Carousel)
@@ -27,13 +27,15 @@ Vue.use(Pagination)
 Vue.use(Image)
 Vue.use(Skeleton)
 Vue.use(SkeletonItem)
-
+Vue.use(InfiniteScroll)
+Vue.use(Loading.directive);
+Vue.use(Dialog)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Avatar)
 
 
 Vue.config.productionTip = false
-    // Vue.use(ElementUI)
-Vue.use(VueParticles)
-    // Vue.use(less)
 
 Vue.prototype.$http = http
 new Vue({

@@ -286,7 +286,6 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  
 }
 #controls{
   display: flex;
@@ -362,6 +361,9 @@ export default {
   align-items: center;
   text-align: center;
   padding: 0 10px;
+}
+.playerTool i{
+  color: #fff;
 }
 .playerTool .playerSchema{
   width: calc(33%);

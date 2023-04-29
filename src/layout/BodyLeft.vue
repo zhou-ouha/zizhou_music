@@ -14,12 +14,16 @@
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content"><i class="iconfont icon">&#xe612;</i>我的收藏</div></el-col>
           </el-row>
           <el-row :gutter="10">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="myMusic getMenu" @click="toggleGetMenu">收藏的歌单<i class="iconfont menuIcon"></i></div>
-            <div class="grid-content getDetailMenu" v-show="getMenu">
-              <span>歌单一</span>
-              <span>歌单二</span>
-              <span>歌单三</span>
-            </div>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+              <div class="myMusic getMenu" @click="toggleGetMenu">
+                收藏的歌单
+                <i class="iconfont menuIcon"></i>
+              </div>
+              <div v-show="getMenu">
+                <div class="getDetailMenu" v-for="(item,index) in menu" @click="getMenuDetail(item.id)">
+                  <i>{{item.name}}</i>
+                </div>
+              </div>
             </el-col>
           </el-row>
         </el-scrollbar>
@@ -36,7 +40,14 @@ export default {
             currentMusicUrl:'',
             isScroll:false,
             showMenuDetail:true,
+            menu:[]
         }
+    },
+    mounted(){
+      let _this = this;
+      this.$bus.$on("user-menu",function(data){
+        _this.menu = data;
+      })
     },
     methods:{
         toggleMyMenu(){
@@ -45,6 +56,9 @@ export default {
         toggleGetMenu(){
             this.getMenu = !this.getMenu
         },
+        getMenuDetail(id){
+          this.$router.push('/musicHome/MenuDetail/id='+id)
+        }
     }
 }
 </script>
@@ -53,8 +67,9 @@ export default {
 #left{
   width: 12%;
   height: calc(100vh - 19vh);
-  background-color: rgba(5, 5, 5, 0.308);
+  background-color: #334;
   overflow: hidden;
+  border-right: 1px solid rgb(180, 174, 174);
 }
 .grid-content {
   min-height: 36px;
@@ -66,7 +81,6 @@ export default {
 .el-col:hover .grid-content{
   cursor: pointer;
   background-color: rgba(93, 93, 93, 0.24);
-  font-weight: bold;
   transition: all .3s;
 }
 .mydetailMnu{
@@ -76,6 +90,22 @@ export default {
   margin-right: 5px;
 }
 .myMenu, .getMenu:hover{
+  cursor: pointer;
+}
+.getDetailMenu{
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 30px;
+  background-color: rgb(75, 75, 92);
+  color: #fff;
+  margin-bottom: 3px;
+  padding: 0 5px;
+  font-size: 12px;
+  line-height: 30px;
+}
+.getDetailMenu:hover{
   cursor: pointer;
 }
 .myMusic{
